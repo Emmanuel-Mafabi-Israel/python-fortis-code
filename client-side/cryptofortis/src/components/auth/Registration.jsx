@@ -34,9 +34,14 @@ export default function Register() {
     }
 
     return (
-        <div>
-            <h2>Register</h2>
-            {renderFormStage()}
+        <div className='fortis-code-registration'>
+            <div className="fortis-code-registration-container">
+                <div className='fortis-code-org'>
+                    <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
+                    <div className='fortis-code-subheading'>Create Your Fortis<b>Code</b>&nbsp;Account</div>
+                </div>
+                {renderFormStage()}
+            </div>
         </div>
     );
 };

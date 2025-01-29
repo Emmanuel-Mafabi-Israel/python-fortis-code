@@ -8,16 +8,15 @@
 
 import React from 'react';
 
-export default function InputField({ label, type, value, onChange, required }) {
+export default function InputField({ className, placeholder, type, value, onChange, required }) {
     return (
-        <div>
-            <label>{label}</label>
-            <input
-                type={type}
-                value={value}
-                onChange={onChange}
-                required={required}
-            />
-        </div>
+        <input
+            className={className}
+            type={type}
+            value={value}
+            onChange={onChange}
+            required={required}
+            placeholder={placeholder}
+        />
     )
 }

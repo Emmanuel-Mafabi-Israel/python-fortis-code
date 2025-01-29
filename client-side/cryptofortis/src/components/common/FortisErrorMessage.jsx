@@ -8,8 +8,8 @@
 
 import React from 'react'
 
-export default function ErrorMessage({ message }) {
+export default function ErrorMessage({ className, message }) {
     return (
-        <div className='fortis-message error' style={{ color: "red" }}>{message}</div>
+        <div className={className}>{message}</div>
     )
 }

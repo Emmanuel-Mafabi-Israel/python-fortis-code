@@ -5,7 +5,7 @@
     BY ISRAEL MAFABI EMMANUEL
 */
 
-const API_BASE_URL = 'http://localhost:5000'; // fortis-cryptofortis backend url
+const API_BASE_URL = 'http://127.0.0.1:5000/'; // fortis-cryptofortis backend url
 
 const defaultHeaders = {
     'Content-Type': 'application/json',

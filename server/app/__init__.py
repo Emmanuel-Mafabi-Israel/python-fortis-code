@@ -6,6 +6,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
+from flask_cors import CORS  # introducing Cross-Origin-Resource-Sharing 😎
 
 from sqlalchemy import MetaData
     
@@ -23,6 +24,8 @@ def create_app(db):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+
+    CORS(app)
     
     # for debugging purposes...
     # print(f"Database Metadata before context:{db.metadata.tables}")

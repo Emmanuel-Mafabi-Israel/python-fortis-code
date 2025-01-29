@@ -41,23 +41,31 @@ export default function RegFormProfile({ onSuccess }) {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            {error && <ErrorMessage message={error} />}
-            <InputField
-                label="Name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
-            <InputField
-                label="Profile Picture URL"
-                type="text"
-                value={profile_picture}
-                onChange={(e) => setProfilePicture(e.target.value)}
-            />
-            <Button type="submit" disabled={loading}>
-                {loading ? <LoadingSpinner /> : 'Complete Registration'}
-            </Button>
+        <form className='fortis-code-registration-form' onSubmit={handleSubmit}>
+            <div className="fortis-code-error-placeholder">
+                {error && <ErrorMessage className="fortis-code-error" message={error} />}
+            </div>
+            <div className="fortis-code-form-inputs">
+                <InputField
+                    className="fortis-code-form-input-fields"
+                    placeholder="Your Name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <InputField
+                    className="fortis-code-form-input-fields"
+                    placeholder="Profile Picture URL"
+                    type="text"
+                    value={profile_picture}
+                    onChange={(e) => setProfilePicture(e.target.value)}
+                />
+            </div>
+            <div className="fortis-code-form-btn">
+                <Button className={"fortis-code-btn-initiators"} type="submit" disabled={loading}>
+                    {loading ? <LoadingSpinner /> : 'Complete Registration'}
+                </Button>
+            </div>
         </form>
     );
 };

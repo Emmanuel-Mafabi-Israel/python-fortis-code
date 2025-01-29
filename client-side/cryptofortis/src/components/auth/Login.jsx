@@ -40,25 +40,41 @@ export default function Login() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            {error && <ErrorMessage message={error} />}
-            <InputField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-            />
-            <InputField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-            <Button type="submit" disabled={loading}>
-                {loading ? <LoadingSpinner /> : 'Login'}
-            </Button>
-        </form>
+        <div className='fortis-code-login'>
+            <div className="fortis-code-login-container">
+                <div className='fortis-code-org'>
+                    <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
+                    <div className='fortis-code-subheading'>Login to Your Fortis<b>Code</b>&nbsp;Account</div>
+                </div>
+                <form className='fortis-code-login-form' onSubmit={handleSubmit}>
+                    <div className="fortis-code-error-placeholder">
+                        {error && <ErrorMessage className="fortis-code-error" message={error} />}
+                    </div>
+                    <div className="fortis-code-form-inputs">
+                        <InputField
+                            className="fortis-code-form-input-fields"
+                            placeholder="Registered Email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <InputField
+                            className="fortis-code-form-input-fields"
+                            placeholder="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="fortis-code-form-btn">
+                        <Button className={"fortis-code-btn-initiators"} type="submit" disabled={loading}>
+                            {loading ? <LoadingSpinner /> : 'Login'}
+                        </Button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 };

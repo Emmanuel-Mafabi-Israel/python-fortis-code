@@ -12,18 +12,18 @@ import Button from '../common/FortisButton';
 
 export default function Welcome() {
     return (
-        <div className="fortis-welcome-page">
-            <div className='fortis-org'>
-                <h1 className='fortis-logo'>Fortis<b>Code</b></h1>
-                <div className='fortis-org-info'>cryptofortis by Israel Mafabi Emmanuel</div>
+        <div className="fortis-code-welcome-page">
+            <div className='fortis-code-org'>
+                <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
+                <div className='fortis-code-subheading'>cryptofortis by Israel Mafabi Emmanuel</div>
             </div>
-            <p className='fortis-setup-text'>Secure Your Digital Assets Today</p>
-            <div className="fortis-welcome-buttons">
+            <p className='fortis-code-setup-text'>Start Your Secure Digital Journey</p>
+            <div className="fortis-code-welcome-buttons">
                 <Link to="/register">
-                    <Button>Get Started</Button>
+                    <Button className='fortis-code-btn-initiators'>Get Started</Button>
                 </Link>
-                <Link to="/login">
-                    <Button>Login</Button>
+                <Link to="/login" className='fortis-code-link-initiators'>
+                    Already a Fortis<b>Code</b> User? Sign in
                 </Link>
             </div>
         </div>

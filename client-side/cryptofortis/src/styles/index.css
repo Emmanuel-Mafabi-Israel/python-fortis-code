@@ -4,3 +4,377 @@
     Styling...
     BY ISRAEL MAFABI EMMANUEL
 */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --fortis-cool-black: rgb(11, 11, 11);
+    --fortis-cool-gray : rgb(134, 134, 139);
+    --fortis-cool-gray-: rgb(180, 180, 186);
+    --fortis-cool-white: white;
+    --fortis-cool-blue : rgb(51, 169, 233);
+    --fortis-cool-red  : rgb(233, 78, 51);
+
+    /* with transparency */
+    --fortis-cool-gray-tr: rgba(255, 255, 255, 0.4);
+
+    --fortis-default-font: "Poppins", sans-serif;
+}
+
+* {
+    font-family: var(--fortis-default-font);
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+
+    transition: 500ms;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fortis-cool-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fortis-cool-white);
+}
+
+body {
+    background: var(--fortis-cool-black);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100vw;
+    min-height: 100vh;
+
+    .fortis-code-welcome-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100vw;
+        height: 100vh;
+
+        .fortis-code-org {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            width: fit-content;
+            height: 40%;
+            min-height: 200px;
+
+            .fortis-code-logo {
+                color: var(--fortis-cool-gray-);
+    
+                font-size: 48px;
+                font-weight: normal;
+        
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                width: fit-content;
+                height: fit-content;
+    
+                .gray {
+                    color: var(--fortis-cool-white);
+                }
+            }
+
+            .fortis-code-subheading {
+                color: var(--fortis-cool-gray-);
+        
+                font-size: 14px;
+                font-weight: normal;
+        
+                display: flex;
+                align-items: center;
+                justify-content: center;
+        
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+
+        .fortis-code-setup-text {
+            color: var(--fortis-cool-gray-);
+        
+            font-size: 35px;
+            font-weight: normal;
+    
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 28px;
+            margin-bottom: 14px;
+    
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .fortis-code-welcome-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: column;
+
+            gap: 21px;
+
+            width: fit-content;
+            height: fit-content;
+
+            .fortis-code-btn-initiators {
+                background: var(--fortis-cool-gray-);
+                border: 1px solid var(--fortis-cool-gray-);
+                border-radius: 28px;
+
+                /* color: var(--fortis-cool-gray-); */
+
+                font-size: 14px;
+
+                cursor: pointer;
+            
+                transition: 200ms;
+
+                width: 256px;
+                height: 45px;
+            }
+
+            .fortis-code-btn-initiators:hover {
+                background: var(--fortis-cool-black);
+                border: 1px solid var(--fortis-cool-gray);
+
+                color: var(--fortis-cool-gray-);
+            }
+
+            .fortis-code-btn-initiators:active {
+                background: var(--fortis-cool-white);
+                border: 1px solid var(--fortis-cool-white);
+
+                color: var(--fortis-cool-black);
+            }
+
+            .fortis-code-link-initiators {
+                color: var(--fortis-cool-gray-);
+                font-size: 14px;
+
+                text-decoration: none;
+
+                transition: 200ms;
+
+                b {
+                    color: var(--fortis-cool-gray-);
+                    transition: 200ms;
+                }
+            }
+
+            .fortis-code-link-initiators:hover {
+                color: var(--fortis-cool-white);
+
+                b {
+                    color: var(--fortis-cool-white);
+                    transition: 200ms;
+                }
+            }
+        }
+    }
+
+    .fortis-code-registration,
+    .fortis-code-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100vw;
+        height: 100vh;
+
+        .fortis-code-registration-container,
+        .fortis-code-login-container {
+            border: 1px solid var(--fortis-cool-gray-);
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+
+            padding: 28px;
+
+            width: 600px;
+            height: fit-content;
+
+            .fortis-code-org {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                padding-left: 7px;
+                padding-right: 7px;
+    
+                width: fit-content;
+                min-height: 50px;
+
+                .fortis-code-logo {
+                    color: var(--fortis-cool-gray-);
+        
+                    font-size: 35px;
+                    font-weight: normal;
+            
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+            
+                    width: fit-content;
+                    height: fit-content;
+        
+                    .gray {
+                        color: var(--fortis-cool-white);
+                    }
+                }
+    
+                .fortis-code-subheading {
+                    color: var(--fortis-cool-white);
+            
+                    font-size: 14px;
+                    font-weight: normal;
+            
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+            
+                    width: fit-content;
+                    height: fit-content;
+                }
+            }
+
+            .fortis-code-registration-form,
+            .fortis-code-login-form {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                width: inherit;
+                min-height: calc(100% - 100px);
+
+                .fortis-code-error-placeholder {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    width: fit-content;
+                    min-height: 21px;
+
+                    .fortis-code-error {
+                        color: var(--fortis-cool-red);
+    
+                        font-size: 13px;
+    
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+    
+                        padding-top: 14px;
+                        padding-bottom: 14px;
+    
+                        width: fit-content;
+                        min-height: 21px;
+                    }
+                }
+
+                .fortis-code-form-inputs {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    gap: 35px;
+
+                    padding-top: 14px;
+                    padding-bottom: 14px;
+
+                    width: inherit;
+                    min-height: 206px;
+
+                    .fortis-code-form-input-fields {
+                        background: var(--fortis-cool-black);
+                        border: 1px solid var(--fortis-cool-gray-);
+                        border-radius: 14px;
+
+                        color: var(--fortis-cool-white);
+
+                        padding-left: 14px;
+                        padding-right: 14px;
+
+                        width: 350px;
+                        min-height: 50px;
+                    }
+                }
+
+                .fortis-code-form-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    margin-top: 28px;
+                    margin-bottom: 14px;
+
+                    width: inherit;
+                    min-height: 45px;
+
+                    .fortis-code-btn-initiators {
+                        background: var(--fortis-cool-gray-);
+                        border: 1px solid var(--fortis-cool-gray-);
+                        border-radius: 28px;
+        
+                        /* color: var(--fortis-cool-gray-); */
+        
+                        font-size: 14px;
+        
+                        cursor: pointer;
+                    
+                        transition: 200ms;
+        
+                        width: 200px;
+                        height: 45px;
+                    }
+                    
+                    .fortis-code-btn-initiators:hover {
+                        background: var(--fortis-cool-black);
+                        border: 1px solid var(--fortis-cool-gray);
+                    
+                        color: var(--fortis-cool-gray-);
+                    }
+                
+                    .fortis-code-btn-initiators:active {
+                        background: var(--fortis-cool-white);
+                        border: 1px solid var(--fortis-cool-white);
+                    
+                        color: var(--fortis-cool-black);
+                    }
+                }
+            }
+        }
+    }
+}
