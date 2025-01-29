@@ -9,7 +9,7 @@ import os
 from flask import Blueprint, request, jsonify, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import db, User, Transaction, Notification  # Import models
+from app.models import db, User, Transaction, Notification, UserProfile  # Import models
 from app.schemas import UserSchema, TransactionSchema, NotificationSchema
 from app.services import notify_user, update_balance
 from app.cryptofortis.cryptofortis import fortis_generate_token, fortis_validate_token
@@ -27,21 +27,31 @@ notification_schema = NotificationSchema()
 @auth_bp.route('/register', methods=['POST'])
 def register():
     # for registration
-    data = request.json
-    email = data.get('email')
+    data     = request.json
+    email    = data.get('email')
     password = generate_password_hash(data.get('password'))
+
     if User.query.filter_by(email=email).first():
         return jsonify({"message": "User already exists"}), 400
     try:
         new_user = User(email=email, password_hash=password)
         db.session.add(new_user)
         db.session.commit()
+
+        # for this case, let's create also the user profile
+        new_user_profile = UserProfile(user_id=new_user.id)
+        db.session.add(new_user_profile)
+        db.session.commit()
+
+        print("UserProfile created:", new_user_profile)
+
         serialized_user = user_schema.dump(new_user)  # Serialize first
         return jsonify(serialized_user), 201  # Then jsonify 😉
 
     except Exception as e:
         db.session.rollback()
         print(f"error creating a user: {e}")
+
         return jsonify({"message": "An error occurred while creating a user"}), 500
 
 @auth_bp.route('/login', methods=['POST'])
@@ -65,9 +75,9 @@ def login():
 def delete_user():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email=user_email).first()
-
     if user:
         try:
+            #  the user profile deletion will be handled by the cascade in the model
             db.session.delete(user)
             db.session.commit()
             return jsonify({'message': 'User account deleted successfully'}), 200
@@ -123,6 +133,34 @@ def get_user_details():
         serialized_user = user_schema.dump(user) # serialize the data
         return jsonify(serialized_user), 200  # then jsonify the response
     return jsonify({'message': 'User not found'}), 404
+
+@auth_bp.route('/user', methods=['PATCH'])
+@jwt_required()
+def update_user_details():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.json;
+    print("Updating user profile with data:", data);
+
+    name = data.get('name')
+    profile = user.profile;
+
+    if name:
+        profile.name = name
+    
+    try:
+        db.session.commit();
+        serialized_user = user_schema.dump(user);
+        return jsonify(serialized_user), 200;
+
+    except Exception as e:
+        db.session.rollback();
+        print(f"Error updating user profile:{e}");
+        
+        return jsonify({"message": f"An error occurred while updating the user:{str(e)}"}), 500
 
 # --- Transaction History ---
 @token_bp.route('/transactions', methods=['GET'])

@@ -1,8 +1,8 @@
-"""Initial Migrations
+"""cascade fix
 
-Revision ID: 9490e09778e9
+Revision ID: 3e6ff1eaa703
 Revises: 
-Create Date: 2025-01-28 03:25:48.701016
+Create Date: 2025-01-29 23:43:20.525758
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '9490e09778e9'
+revision = '3e6ff1eaa703'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -79,7 +79,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=True),
-    sa.Column('profile_picture', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_profiles_user_id_users')),
     sa.PrimaryKeyConstraint('id')
     )

@@ -24,7 +24,7 @@ class User(db.Model):
     notifications = db.relationship('Notification', secondary=user_notifications, backref='users')
     audit_logs    = db.relationship('AuditLog', backref='user', lazy=True)
     activities    = db.relationship('Activity', backref='user', lazy=True)
-    profile       = db.relationship('UserProfile', backref='user', uselist=False)
+    profile       = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
     roles         = db.relationship('Role', secondary='user_roles', backref='users')
     
     # for debugging...
@@ -62,7 +62,6 @@ class UserProfile(db.Model):
     id              = db.Column(db.Integer, primary_key=True)
     user_id         = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     name            = db.Column(db.String(120), nullable=True)
-    profile_picture = db.Column(db.String(255), nullable=True)
 
 class Role(db.Model):
     __tablename__ = 'roles'

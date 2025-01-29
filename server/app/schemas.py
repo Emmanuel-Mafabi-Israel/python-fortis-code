@@ -4,10 +4,12 @@
 
 # MODELS - SCHEMA, SERIALIZATION
 
+from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models import User, Transaction, Notification, AuditLog, UserProfile, Role, Activity
 
 class UserSchema(SQLAlchemyAutoSchema):
+    profile = fields.Nested('UserProfileSchema')
     class Meta:
         model = User
         load_instance = True
