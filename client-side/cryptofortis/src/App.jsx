@@ -15,6 +15,7 @@ import AccountInfo from './components/dashboard/AccountInfo';
 import Notifications from './components/dashboard/Notifications';
 import TransactionHistory from './components/dashboard/TransactionHistory';
 import TransactionAction from './components/dashboard/TransactionAction';
+
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
 // ProtectedRoute
@@ -25,8 +26,8 @@ const ProtectedRoute = ({ children }) => {
 
 export default function App() {
 	return (
-		<AuthProvider>
-			<Router>
+		<Router>
+			<AuthProvider>
 				<Routes>
 					<Route path="/" element={<Welcome />} />
 					<Route path="/login" element={<Login />} />
@@ -57,7 +58,7 @@ export default function App() {
 						</ProtectedRoute>
 					} />
 				</Routes>
-			</Router>
-		</AuthProvider>
+			</AuthProvider>
+		</Router>
 	);
 };
