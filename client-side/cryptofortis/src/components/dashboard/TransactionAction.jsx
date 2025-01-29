@@ -7,12 +7,15 @@
 */
 
 import React, { useState, useContext } from 'react';
-import InputField from '../common/InputField';
-import Button from '../common/Button';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
+
+import InputField from '../common/FortisInputField';
+import Button from '../common/FortisButton';
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
+
 import { AuthContext } from '../../context/AuthContext';
-import api from '../../api/api'; // Import the API functions
+import api from '../api/api'; // Import the API functions
+
 import DashboardLayout from '../layouts/DashboardLayout'
 
 export default function TransactionAction() {

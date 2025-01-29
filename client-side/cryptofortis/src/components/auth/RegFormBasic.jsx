@@ -7,11 +7,13 @@
 */
 
 import React, { useState } from 'react';
-import InputField from '../common/InputField';
-import Button from '../common/Button';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
-import api from '../../api/api'; // Importing the API functions
+
+import InputField from '../common/FortisInputField';
+import Button from '../common/FortisButton';
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
+
+import api from '../api/api'
 
 export default function RegFormBasic({ onSuccess }) {
     const [email, setEmail] = useState('');

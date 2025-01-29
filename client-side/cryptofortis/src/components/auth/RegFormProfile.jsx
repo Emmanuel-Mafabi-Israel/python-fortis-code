@@ -7,10 +7,11 @@
 */
 
 import React, { useState } from 'react'; // also add useContext
-import InputField from '../common/InputField';
-import Button from '../common/Button';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
+
+import InputField from '../common/FortisInputField';
+import Button from '../common/FortisButton';
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
 // import api from '../../api/api'; // Importing the API functions
 // import { AuthContext } from '../../context/AuthContext';
 

@@ -7,11 +7,14 @@
 */
 
 import React, { useState, useEffect, useContext } from 'react';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
+
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
+
 import DashboardLayout from '../layouts/DashboardLayout'
+
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
-import api from '../../api/api'; // Import the API functions
+import api from '../api/api'; // Import the API functions
 
 export default function DashboardMain() {
     const [user, setUser] = useState(null);

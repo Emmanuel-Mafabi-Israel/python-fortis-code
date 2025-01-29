@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../common/Button';
+import Button from '../common/FortisButton';
 
 export default function Welcome() {
     return (

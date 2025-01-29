@@ -8,12 +8,14 @@
 
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../common/InputField';
-import Button from '../common/Button';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
+
+import InputField from '../common/FortisInputField';
+import Button from '../common/FortisButton';
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
+
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
-import api from '../../api/api'; // Import the API functions
+import api from '../api/api'; // Import the API functions
 
 export default function Login() {
     const [email, setEmail] = useState('');

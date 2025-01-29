@@ -6,11 +6,13 @@
     --- NOTIFICATIONS ---
 */
 import React, { useState, useEffect, useContext, useCallback } from 'react';
-import LoadingSpinner from '../common/LoadingSpinner';
-import ErrorMessage from '../common/ErrorMessage';
-import Button from '../common/Button';
+
+import LoadingSpinner from '../common/FortisLoadingSpinner';
+import ErrorMessage from '../common/FortisErrorMessage';
+import Button from '../common/FortisButton';
+
 import { AuthContext } from '../../context/AuthContext';
-import api from '../../api/api'; // Import the API functions
+import api from '../api/api'; // Import the API functions
 
 import DashboardLayout from '../layouts/DashboardLayout'
 
