@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import Welcome from './components/auth/Welcome';
 import Login from './components/auth/Login';
 import Registration from './components/auth/Registration';
