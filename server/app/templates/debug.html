@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FortisCode - Debugging</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    </head>
+    <body>
+        <div class="fortis-code-header">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-subheading">Debug Mode</div>
+        </div>
+        <div class="fortis-body">
+            <ul class="fortis-code-list">
+                <li class="fortis-code-links">debug-channel:&nbsp;<a href="{{ url_for('auth.debug_models') }}">Database Models</a></li>
+                <li class="fortis-code-links">debug-channel:&nbsp;<a href="{{ url_for('auth.debug_users') }}">User Emails</a></li>
+            </ul>
+        </div>
+        <div class="fortis-footer">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-developers">cryptofortis by Israel Mafabi Emmanuel</div>
+        </div>
+    </body>
+</html>

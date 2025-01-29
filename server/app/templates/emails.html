@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FortisCode - All Emails</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    </head>
+    <body>
+        <div class="fortis-code-header">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-subheading">Registered e-mails</div>
+        </div>
+        <div class="fortis-body">
+            <ul class="fortis-code-list">
+                {% for index, email in emails %}
+                <li class="fortis-code-email"><div class="index">account, {{ index }}</div>:&nbsp; <div class="white">{{ email }}</div></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="fortis-footer">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-developers">cryptofortis by Israel Mafabi Emmanuel</div>
+        </div>
+    </body>
+</html>

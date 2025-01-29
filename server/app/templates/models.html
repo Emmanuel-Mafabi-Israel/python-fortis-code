@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FortisCode - Models</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='design.css') }}">
+    </head>
+    <body>
+        <div class="fortis-code-header">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-subheading">System Models</div>
+        </div>
+        <div class="fortis-body">
+            <ul class="fortis-code-list">
+                {% for table_name, table in metadata.items() %}
+                <li class="fortis-code-table">
+                    <strong>{{ table_name }}</strong>
+                    <ul>
+                        {% for column in table.columns %}
+                        <li><div class="name">{{ column.name }}</div>&nbsp;<div class="type">({{ column.type }})</div></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="fortis-footer">
+            <div class="fortis-code-logo">Fortis<b class="gray">Code</b></div>
+            <div class="fortis-code-developers">cryptofortis by Israel Mafabi Emmanuel</div>
+        </div>
+    </body>
+</html>
