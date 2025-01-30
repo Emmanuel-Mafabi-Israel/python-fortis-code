@@ -126,13 +126,13 @@ def _handle_transaction(sender_email, recipient_email, value, method, expiry):
         # Add user notification
         # expiry is coming from send_token
         notify_user(recipient_email, sender_email, value, expiry, method)
-        
+
         return jsonify({"message": "Token sent successfully"}), 200
     except Exception as e:
-         print(f"Error in _handle_transaction: {e}")
-         if "Insufficient Funds" in str(e):
-             return jsonify({"error": "Insufficient funds"}), 400
-         return jsonify({'error': f'An error occured during the transaction: {e}'}), 500
+        print(f"Error in _handle_transaction: {e}")
+        if "Insufficient Funds" in str(e):
+            return jsonify({"error": "Insufficient funds"}), 400
+        return jsonify({'error': f'An error occured during the transaction: {e}'}), 500
 
 @token_bp.route('/notifications', methods=['GET'])
 @jwt_required()
