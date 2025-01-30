@@ -1,0 +1,7 @@
+services:
+- type: web
+  name: cryptofortis-backend
+  env: python
+  plan: free
+  buildCommand: ""
+  startCommand: gunicorn server:app
