@@ -40,31 +40,40 @@ export default function TransactionAction() {
 
     return (
         <DashboardLayout>
-            <div>
-                <h2>Initiate Transaction</h2>
-                <form onSubmit={handleSubmit}>
-                    {error && <ErrorMessage message={error} />}
-                    <InputField
-                        label="Recipient Email"
-                        type="email"
-                        value={recipient}
-                        onChange={(e) => setRecipient(e.target.value)}
-                        required
-                    />
-                    <InputField
-                        label="Value"
-                        type="number"
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        required
-                    />
-                    <select value={method} onChange={(e) => setMethod(e.target.value)}>
-                        <option value="direct">Direct</option>
-                        <option value="deposit">Deposit</option>
-                    </select>
-                    <Button type="submit" disabled={loading}>
-                        {loading ? <LoadingSpinner /> : 'Send Token'}
-                    </Button>
+            <div className='fortis-code-dashboard-main-transact'>
+                <div className='fortis-code-user'>
+                    <div className='fortis-code-user-logo'>Initiate Transaction</div>
+                    <div className='fortis-code-user-subheading'>Asset Transfer</div>
+                </div>
+                <form className='fortis-code-user-account-transaction-form' onSubmit={handleSubmit}>
+                    <div className="fortis-code-transaction">
+                        {error && <ErrorMessage className="fortis-code-error" message={error} />}
+                        <InputField
+                            className="fortis-code-form-input-fields"
+                            placeholder="Recipient Email"
+                            type="email"
+                            value={recipient}
+                            onChange={(e) => setRecipient(e.target.value)}
+                            required
+                        />
+                        <InputField
+                            className="fortis-code-form-input-fields"
+                            placeholder="Token Amount"
+                            type="number"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            required
+                        />
+                        <div className="fortis-code-form-interactive">
+                            <select className="fortis-code-select" value={method} onChange={(e) => setMethod(e.target.value)} title='Select Transaction Type'>
+                                <option value="direct">Direct</option>
+                                <option value="deposit">Deposit</option>
+                            </select>
+                            <Button className="fortis-code-btn-initiators" type="submit" disabled={loading}>
+                                {loading ? <LoadingSpinner /> : 'Send Token'}
+                            </Button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </DashboardLayout>

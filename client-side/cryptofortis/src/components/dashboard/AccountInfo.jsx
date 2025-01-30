@@ -84,7 +84,7 @@ export default function AccountInfo() {
     }
 
     if (error) {
-        return <ErrorMessage message={error} />;
+        return <ErrorMessage className="fortis-code-error-major" message={error} />;
     }
 
     return (
@@ -112,7 +112,7 @@ export default function AccountInfo() {
                                     onChange={handleNameChange}
                                 />
                                 <div className="fortis-code-form-btn">
-                                    <Button className={"fortis-code-btn-initiators"} type="submit" disabled={loading}>
+                                    <Button className="fortis-code-btn-initiators" type="submit" disabled={loading}>
                                         {loading ? <LoadingSpinner /> : 'Update Name'}
                                     </Button>
                                 </div>

@@ -13,6 +13,7 @@ from app.models import db, User, Transaction, Notification, UserProfile  # Impor
 from app.schemas import UserSchema, TransactionSchema, NotificationSchema
 from app.services import notify_user, update_balance
 from app.cryptofortis.cryptofortis import fortis_generate_token, fortis_validate_token
+from app.services import update_balance, record_transaction
 
 # print(f"db.metadata in routes.py before schema: {db.metadata}") -> for debugging purposes
 
@@ -43,7 +44,9 @@ def register():
         db.session.add(new_user_profile)
         db.session.commit()
 
-        print("UserProfile created:", new_user_profile)
+        update_balance(None, new_user.email, 500) # depositing 500 tokens...
+
+        # print("UserProfile created:", new_user_profile) -> for debugging purposes...
 
         serialized_user = user_schema.dump(new_user)  # Serialize first
         return jsonify(serialized_user), 201  # Then jsonify 😉
@@ -93,25 +96,42 @@ def send_token():
     # for token transfer
     data = request.json
     sender_email = get_jwt_identity()
-    value = data['value']
-    recipient_email = data['recipient']
-    method = data['method']
-    token = fortis_generate_token(sender_email, value, recipient_email, expiry=int(os.getenv('TOKEN_EXPIRY', 14400)))  # default expiry in minutes, from env vars
+    value = data.get('value')
+    recipient_email = data.get('recipient')
+    method = data.get('method')
+    expiry = data.get('expiry', int(os.getenv('TOKEN_EXPIRY', 14400)))
 
-    if method == 'direct':
-        notify_user(recipient_email, sender_email, token, expiry=int(os.getenv('TOKEN_EXPIRY', 14400)))
+    if not all([value, recipient_email, method, expiry]):
+        return jsonify({"error": "Missing required fields"}), 400
+    try:
+        value = int(value)
+    except ValueError:
+        return jsonify({'error': 'Invalid transaction value'}), 400
 
-        return jsonify({"token": token}), 200
+    # Generate the token
+    token = fortis_generate_token(sender_email, value, recipient_email, expiry=expiry)
 
-    elif method == 'deposit':
-        if fortis_validate_token(token):
-            update_balance(sender_email, recipient_email, value)
-            notify_user(recipient_email, sender_email, token, expiry=int(os.getenv('TOKEN_EXPIRY', 14400)))
+    if not fortis_validate_token(token):
+        return jsonify({"error": "Invalid token"}), 400
+    
+    # Use a method to handle update balance and record transaction as well as notification to be more modular
+    _handle_transaction(sender_email, recipient_email, value, method, expiry)
+    return jsonify({"message": "Token sent successfully"}), 200
 
-            return jsonify({"message": "Token deposited successfully"}), 200
-
-    return jsonify({"error": "Invalid method"}), 400
-
+def _handle_transaction(sender_email, recipient_email, value, method, expiry):
+    description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
+    try:
+        # update user balances
+        update_balance(sender_email, recipient_email, value)
+        # Record transaction
+        record_transaction(sender_email, recipient_email, value, description)
+        # Add user notification
+        # expiry is coming from send_token
+        notify_user(recipient_email, sender_email, value, expiry)
+    except Exception as e:
+        print(f"Error in _handle_transaction: {e}")
+        raise e
+    
 @token_bp.route('/notifications', methods=['GET'])
 @jwt_required()
 def get_notifications():
@@ -130,8 +150,9 @@ def get_user_details():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email=user_email).first()
     if user:
-        serialized_user = user_schema.dump(user) # serialize the data
-        return jsonify(serialized_user), 200  # then jsonify the response
+        print(f"User balance (from get_user_details): {user.balance}")  # Debug print
+        serialized_user = user_schema.dump(user)
+        return jsonify(serialized_user), 200
     return jsonify({'message': 'User not found'}), 404
 
 @auth_bp.route('/user', methods=['PATCH'])

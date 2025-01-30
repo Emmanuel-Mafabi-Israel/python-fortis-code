@@ -15,18 +15,18 @@ user_notifications = db.Table('user_notifications',
 
 class User(db.Model):
     __tablename__ = 'users'
-    id            = db.Column(db.Integer, primary_key=True)
-    email         = db.Column(db.String(120), unique=True, nullable=False)
-    password_hash = db.Column(db.String(255), nullable=False)
-    balance       = db.Column(db.Integer, default=0)
+    id                    = db.Column(db.Integer, primary_key=True)
+    email                 = db.Column(db.String(120), unique=True, nullable=False)
+    password_hash         = db.Column(db.String(255), nullable=False)
+    balance               = db.Column(db.Integer, default=0)
     # table relationships
-    transactions  = db.relationship('Transaction', backref='owner', lazy=True, foreign_keys='[Transaction.sender_id]')
-    notifications = db.relationship('Notification', secondary=user_notifications, backref='users')
-    audit_logs    = db.relationship('AuditLog', backref='user', lazy=True)
-    activities    = db.relationship('Activity', backref='user', lazy=True)
-    profile       = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
-    roles         = db.relationship('Role', secondary='user_roles', backref='users')
-    
+    sent_transactions     = db.relationship('Transaction', backref='sender', lazy=True, foreign_keys='[Transaction.sender_id]')
+    received_transactions = db.relationship('Transaction', backref='recipient', lazy=True, foreign_keys='[Transaction.recipient_id]')
+    notifications         = db.relationship('Notification', secondary=user_notifications, backref='users')
+    audit_logs            = db.relationship('AuditLog', backref='user', lazy=True)
+    activities            = db.relationship('Activity', backref='user', lazy=True)
+    profile               = db.relationship('UserProfile', backref='user', uselist=False, cascade='all, delete-orphan')
+    roles                 = db.relationship('Role', secondary='user_roles', backref='users')
     # for debugging...
     def __repr__(self):
         return f"<User id:{self.id}, email:{self.email}>"

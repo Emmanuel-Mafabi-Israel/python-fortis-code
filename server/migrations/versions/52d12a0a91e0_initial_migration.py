@@ -1,8 +1,8 @@
-"""cascade fix
+"""Initial Migration
 
-Revision ID: 3e6ff1eaa703
+Revision ID: 52d12a0a91e0
 Revises: 
-Create Date: 2025-01-29 23:43:20.525758
+Create Date: 2025-01-30 12:38:53.517041
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3e6ff1eaa703'
+revision = '52d12a0a91e0'
 down_revision = None
 branch_labels = None
 depends_on = None

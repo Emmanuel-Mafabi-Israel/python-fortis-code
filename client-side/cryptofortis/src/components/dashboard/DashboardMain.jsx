@@ -45,7 +45,7 @@ export default function DashboardMain() {
     }
 
     if (error) {
-        return <ErrorMessage message={error} />;
+        return <ErrorMessage className="fortis-code-error-major" message={error} />;
     }
 
     return (

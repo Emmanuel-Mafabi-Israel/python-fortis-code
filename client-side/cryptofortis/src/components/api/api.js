@@ -25,7 +25,7 @@ const apiCall = async (url, method = 'GET', body = null, headers = {}) => {
         // console.log(response)
         if (!response.ok) {
             const message = await response.json()
-            throw new Error(message.message || 'Something went wrong');
+            throw new Error(message.message || 'Something went wrong!');
         }
 
         const data = await response.json();

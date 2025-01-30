@@ -43,7 +43,7 @@ export default function TransactionHistory() {
     }
 
     if (error) {
-        return <ErrorMessage message={error} />;
+        return <ErrorMessage className="fortis-code-error-major" message={error} />;
     }
 
     return (
