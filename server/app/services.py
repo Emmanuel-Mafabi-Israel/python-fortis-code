@@ -4,8 +4,11 @@
 
 # services.py
 import os
+
+from extensions import db
+
 from datetime import datetime, timezone, timedelta
-from app.models import db, User, Notification, Transaction
+from app.models import User, Notification, Transaction
 
 def notify_user(recipient, sender, value, expiry, method):
     expiry_time = datetime.now(timezone.utc) + timedelta(minutes=expiry)

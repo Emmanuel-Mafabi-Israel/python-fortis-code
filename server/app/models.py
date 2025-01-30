@@ -4,7 +4,7 @@
 
 # MODELS
 
-from server import db
+from extensions import db
 # import datetime
 
 # our association table...

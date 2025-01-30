@@ -5,10 +5,12 @@
 import os
 # print("routes.py file loading") -> for debugging purposes
 
+from extensions import db
+
 from flask import Blueprint, request, jsonify, render_template
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.models import db, User, Transaction, Notification, UserProfile  # Import models
+from app.models import User, Transaction, Notification, UserProfile  # Import models
 from app.schemas import UserSchema, TransactionSchema, NotificationSchema
 from app.services import notify_user, update_balance
 from app.cryptofortis.cryptofortis import fortis_generate_token, fortis_validate_token
