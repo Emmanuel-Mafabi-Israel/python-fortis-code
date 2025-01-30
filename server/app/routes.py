@@ -3,7 +3,6 @@
 # BY ISRAEL MAFABI EMMANUEL
 
 import os
-
 # print("routes.py file loading") -> for debugging purposes
 
 from flask import Blueprint, request, jsonify, render_template
@@ -85,9 +84,9 @@ def delete_user():
             db.session.commit()
             return jsonify({'message': 'User account deleted successfully'}), 200
         except Exception as e:
-             db.session.rollback()
-             print(f"error deleting the user {e}")
-             return jsonify({'message':'An error occurred while deleting the user'}), 500
+            db.session.rollback()
+            print(f"error deleting the user {e}")
+            return jsonify({'message':'An error occurred while deleting the user'}), 500
     return jsonify({'message': 'User not found'}), 404
 
 @token_bp.route('/send_token', methods=['POST'])
@@ -115,8 +114,7 @@ def send_token():
         return jsonify({"error": "Invalid token"}), 400
     
     # Use a method to handle update balance and record transaction as well as notification to be more modular
-    _handle_transaction(sender_email, recipient_email, value, method, expiry)
-    return jsonify({"message": "Token sent successfully"}), 200
+    return _handle_transaction(sender_email, recipient_email, value, method, expiry)
 
 def _handle_transaction(sender_email, recipient_email, value, method, expiry):
     description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
@@ -127,11 +125,15 @@ def _handle_transaction(sender_email, recipient_email, value, method, expiry):
         record_transaction(sender_email, recipient_email, value, description)
         # Add user notification
         # expiry is coming from send_token
-        notify_user(recipient_email, sender_email, value, expiry)
+        notify_user(recipient_email, sender_email, value, expiry, method)
+        
+        return jsonify({"message": "Token sent successfully"}), 200
     except Exception as e:
-        print(f"Error in _handle_transaction: {e}")
-        raise e
-    
+         print(f"Error in _handle_transaction: {e}")
+         if "Insufficient Funds" in str(e):
+             return jsonify({"error": "Insufficient funds"}), 400
+         return jsonify({'error': f'An error occured during the transaction: {e}'}), 500
+
 @token_bp.route('/notifications', methods=['GET'])
 @jwt_required()
 def get_notifications():

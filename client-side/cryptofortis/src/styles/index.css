@@ -8,12 +8,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --fortis-cool-black: rgb(11, 11, 11);
-    --fortis-cool-gray: rgb(134, 134, 139);
-    --fortis-cool-gray-: rgb(180, 180, 186);
-    --fortis-cool-white: white;
-    --fortis-cool-blue: rgb(51, 169, 233);
-    --fortis-cool-red: rgb(233, 78, 51);
+    --fortis-cool-black  : rgb(11, 11, 11);
+    --fortis-cool-gray   : rgb(134, 134, 139);
+    --fortis-cool-gray-  : rgb(180, 180, 186);
+    --fortis-cool-white  : white;
+    --fortis-cool-blue   : rgb(51, 169, 233);
+    --fortis-cool-red    : rgb(233, 78, 51);
+    --fortis-cool-green  : rgb(51, 233, 100);
 
     /* with transparency */
     --fortis-cool-gray-tr: rgba(255, 255, 255, 0.4);
@@ -528,20 +529,21 @@ body {
 
                 .fortis-code-dashboard-main-container {
                     display: flex;
-                    align-items: flex-start;
+                    align-items: center;
                     justify-content: flex-start;
-
                     flex-direction: column;
 
-                    padding: 21px;
+                    padding: 35px;
 
                     width: 100vw;
+                    height: calc(100vh - 140px);
+                    max-height: calc(100vh - 140px);
                     min-height: calc(100vh - 140px);
 
                     .fortis-code-welcome-text {
                         color: var(--fortis-cool-white);
 
-                        font-size: 13px;
+                        font-size: 35px;
 
                         display: flex;
                         align-items: center;
@@ -549,9 +551,12 @@ body {
 
                         width: fit-content;
                         height: fit-content;
+                        min-height: 70px;
 
                         .fortis-code-setup-heads-up {
                             color: var(--fortis-cool-gray);
+
+                            font-size: 13px;
 
                             display: flex;
                             align-items: center;
@@ -570,14 +575,47 @@ body {
                     .fortis-code-balance-text {
                         color: var(--fortis-cool-white);
 
-                        font-size: 13px;
-
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        flex-direction: column;
 
-                        width: fit-content;
-                        height: fit-content;
+                        width: 600px;
+                        height: calc(100% - 120px);
+
+                        .balance {
+                            color: var(--fortis-cool-gray-);
+                            font-size: 75px;
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            width: fit-content;
+                            height: fit-content;
+
+                            .symbol {
+                                color: var(--fortis-cool-white);
+
+                                font-size: 25px;
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                padding-left: 14px;
+
+                                width: fit-content;
+                                height: inherit;
+                            }
+                        }
+
+                        .indicator {
+                            color: var(--fortis-cool-gray-);
+
+                            width: fit-content;
+                            height: fit-content;
+                        }
                     }
                 }
             }
@@ -823,7 +861,7 @@ body {
                 padding: 7px;
 
                 width: 100vw;
-                min-height: calc(100vh - 140px);
+                max-height: calc(100vh - 140px);
 
                 .fortis-code-user {
                     border-bottom: 1px solid var(--fortis-cool-gray-tr);
@@ -839,6 +877,7 @@ body {
 
                     width: fit-content;
                     height: 70px;
+                    min-height: 70px;
 
                     .fortis-code-user-logo {
                         color: var(--fortis-cool-gray-);
@@ -913,12 +952,15 @@ body {
                         display: flex;
                         align-items: center;
 
+                        padding-top: 14px;
+                        padding-bottom: 14px;
+
                         padding-left: 21px;
                         padding-right: 21px;
 
                         width: 400px;
-                        height: fit-content;
-                        min-height: 55px;
+                        height: 100px;
+                        min-height: 100px;
 
                         p {
                             color: var(--fortis-cool-black);
@@ -947,7 +989,7 @@ body {
                 padding: 7px;
 
                 width: 100vw;
-                min-height: calc(100vh - 140px);
+                max-height: calc(100vh - 140px);
 
                 .fortis-code-user {
                     border-bottom: 1px solid var(--fortis-cool-gray-tr);
@@ -963,6 +1005,7 @@ body {
 
                     width: fit-content;
                     height: 70px;
+                    min-height: 70px;
 
                     .fortis-code-user-logo {
                         color: var(--fortis-cool-gray-);
@@ -1039,14 +1082,14 @@ body {
                         justify-content: center;
                         flex-direction: column;
 
-                        padding-top: 7px;
-                        padding-bottom: 7px;
-                        padding-left: 14px;
-                        padding-right: 14px;
+                        padding-top: 14px;
+                        padding-bottom: 14px;
+                        padding-left: 21px;
+                        padding-right: 21px;
 
-                        width: 300px;
-                        height: fit-content;
-                        min-height: 55px;
+                        width: 400px;
+                        height: 55px;
+                        min-height: 100px;
                     }
 
                     .fortis-code-user-nothing {
@@ -1140,6 +1183,31 @@ body {
 
                         width: 600px;
                         height: fit-content;
+
+                        .fortis-code-transaction-messages {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            width: inherit;
+                            height: 21px;
+
+                            .fortis-code-error {
+                                color: var(--fortis-cool-red);
+                                font-size: 13px;
+
+                                width: fit-content;
+                                height: fit-content;
+                            }
+
+                            .fortis-code-success {
+                                color: var(--fortis-cool-green);
+                                font-size: 13px;
+
+                                width: fit-content;
+                                height: fit-content;
+                            }
+                        }
 
                         .fortis-code-form-input-fields {
                             background: var(--fortis-cool-black);

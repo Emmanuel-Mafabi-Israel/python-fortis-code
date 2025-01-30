@@ -2,13 +2,17 @@
 # FORTIS SERVICES,
 # BY ISRAEL MAFABI EMMANUEL
 
+# services.py
 import os
 from datetime import datetime, timezone, timedelta
 from app.models import db, User, Notification, Transaction
 
-def notify_user(recipient, sender, value, expiry):
+def notify_user(recipient, sender, value, expiry, method):
     expiry_time = datetime.now(timezone.utc) + timedelta(minutes=expiry)
-    message     = f"You've received a token from {sender}. You have {expiry} minutes to redeem or use the token."
+    if method == 'deposit':
+        message = f"You've received a deposit of {value} tokens."
+    else:
+        message = f"You've received a token from {sender}. You have {expiry} minutes to redeem or use the token."
     try:
         notification = Notification(message=message, expiry_time=expiry_time)
         recipient_user = User.query.filter_by(email=recipient).first()
@@ -67,8 +71,10 @@ def record_transaction(sender_email, recipient_email, value, description=None):
             transaction_type=transaction_type,
             description=description
         )
+
         db.session.add(transaction)
         db.session.commit()
+        
     except Exception as e:
         db.session.rollback()
         print(f"Error recording transaction: {e}")

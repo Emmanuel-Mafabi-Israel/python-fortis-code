@@ -6,12 +6,13 @@
     --- TRANSACTION ACTIONS ---
 */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import InputField from '../common/FortisInputField';
 import Button from '../common/FortisButton';
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
+import SuccessMessage from '../common/FortisSuccessMessage';
 
 import { AuthContext } from '../../context/AuthContext';
 import api from '../api/api'; // Import the API functions
@@ -24,14 +25,44 @@ export default function TransactionAction() {
     const [method, setMethod] = useState('direct');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const { token } = useContext(AuthContext)
+
+
+    useEffect(() => {
+        if (error) {
+            console.log('Error State:', error);
+
+            const timer = setTimeout(() => {
+                setError('');
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (successMessage) {
+            console.log('Success State:', successMessage);
+            const timer = setTimeout(() => {
+                setSuccessMessage('');
+            }, 3000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [successMessage]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
+        if (!loading) {
+            setLoading(true);
+        }
         setError('');
+        setSuccessMessage('');
         try {
-            await api.sendToken(token, { recipient, value, method });
+            const response = await api.sendToken(token, { recipient, value, method });
+            setSuccessMessage(response.message)
+            console.log('data from send token', response);
         } catch (err) {
             setError(err.message);
         }
@@ -47,7 +78,10 @@ export default function TransactionAction() {
                 </div>
                 <form className='fortis-code-user-account-transaction-form' onSubmit={handleSubmit}>
                     <div className="fortis-code-transaction">
-                        {error && <ErrorMessage className="fortis-code-error" message={error} />}
+                        <div className="fortis-code-transaction-messages">
+                            {error && <ErrorMessage className="fortis-code-error" message={error} />}
+                            {successMessage && <SuccessMessage className="fortis-code-success" message={successMessage} />}
+                        </div>
                         <InputField
                             className="fortis-code-form-input-fields"
                             placeholder="Recipient Email"

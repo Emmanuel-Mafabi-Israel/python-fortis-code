@@ -54,9 +54,21 @@ export default function DashboardMain() {
                 {user && (
                     <div className='fortis-code-dashboard-main-container'>
                         <div className='fortis-code-welcome-text'>
-                        Welcome,&nbsp;{user.profile?.name ? user.profile.name + "!" : <div className='fortis-code-setup-heads-up'><p>Go to <Link className='fortis-code-link-redirect' to="/account">Account Section</Link> and set-up your account credentials.</p></div>}
+                        {user.profile?.name ? "Welcome, " + user.profile.name + "!" : 
+                            <div className='fortis-code-setup-heads-up'>
+                                <p>Go to the&nbsp;
+                                    <Link className='fortis-code-link-redirect' to="/account">
+                                        Account Section
+                                    </Link>
+                                    &nbsp;and set-up your account credentials. <br />
+                                    You've been awarded funds - participation funds. 
+                                    </p>
+                            </div>}
                         </div>
-                        <p className='fortis-code-balance-text'>Balance: {user.balance}</p>
+                        <div className='fortis-code-balance-text'>
+                            <div className="balance"> <div className="symbol">FTK</div>{user.balance}</div>
+                            <div className="indicator">Available balance</div>
+                        </div>
                         {/* we'll Display other user details as needed 😉 */}
                     </div>
                 )}

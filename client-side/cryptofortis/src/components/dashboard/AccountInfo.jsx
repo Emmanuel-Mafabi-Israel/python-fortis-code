@@ -20,12 +20,12 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 
 export default function AccountInfo() {
-    const [user, setUser]       = useState(null);
-    const [name, setName]       = useState('');
+    const [user, setUser] = useState(null);
+    const [name, setName] = useState('');
     const [loading, setLoading] = useState(true);
-    const [error, setError]     = useState('');
-    const { token, logout }     = useContext(AuthContext);
-    const navigate              = useNavigate();
+    const [error, setError] = useState('');
+    const { token, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const fetchUserDetails = useCallback(async () => {
         setLoading(true);

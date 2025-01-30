@@ -22,10 +22,19 @@ const apiCall = async (url, method = 'GET', body = null, headers = {}) => {
         };
 
         const response = await fetch(`${API_BASE_URL}${url}`, options);
-        // console.log(response)
+
         if (!response.ok) {
-            const message = await response.json()
-            throw new Error(message.message || 'Something went wrong!');
+            // If not OK, parse the JSON error message
+            let message = 'Something went wrong!';
+            try {
+                const errorData = await response.json()
+                message = errorData.error || errorData.message || 'Something went wrong!';
+
+            } catch (jsonError) {
+                // Handle the case where the error is not valid JSON (e.g. HTML Error)
+                message = await response.text() || 'Something went wrong!';
+            }
+            throw new Error(message);
         }
 
         const data = await response.json();
@@ -36,13 +45,13 @@ const apiCall = async (url, method = 'GET', body = null, headers = {}) => {
 };
 
 // API call functions
-const register          = (userData) => apiCall('/register', 'POST', userData);
-const login             = (credentials) => apiCall('/login', 'POST', credentials);
-const deleteUser        = (token) => apiCall('/user', 'DELETE', null, { 'Authorization': `Bearer ${token}` });
-const getUserDetails    = (token) => apiCall('/user', 'GET', null, { 'Authorization': `Bearer ${token}` });
-const sendToken         = (token, payload) => apiCall('/send_token', 'POST', payload, { 'Authorization': `Bearer ${token}` });
-const getNotifications  = (token) => apiCall('/notifications', 'GET', null, { 'Authorization': `Bearer ${token}` });
-const getTransactions   = (token) => apiCall('/transactions', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const register = (userData) => apiCall('/register', 'POST', userData);
+const login = (credentials) => apiCall('/login', 'POST', credentials);
+const deleteUser = (token) => apiCall('/user', 'DELETE', null, { 'Authorization': `Bearer ${token}` });
+const getUserDetails = (token) => apiCall('/user', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const sendToken = (token, payload) => apiCall('/send_token', 'POST', payload, { 'Authorization': `Bearer ${token}` });
+const getNotifications = (token) => apiCall('/notifications', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const getTransactions = (token) => apiCall('/transactions', 'GET', null, { 'Authorization': `Bearer ${token}` });
 const updateUserProfile = (token, payload) => apiCall('/user', 'PATCH', payload, { 'Authorization': `Bearer ${token}` });
 
 const api = {
