@@ -813,6 +813,254 @@ body {
                     }
                 }
             }
+
+            .fortis-code-dashboard-main-notifications {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                padding: 7px;
+
+                width: 100vw;
+                min-height: calc(100vh - 140px);
+
+                .fortis-code-user {
+                    border-bottom: 1px solid var(--fortis-cool-gray-tr);
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    gap: 50px;
+    
+                    padding-left: 7px;
+                    padding-right: 7px;
+        
+                    width: fit-content;
+                    height: 70px;
+    
+                    .fortis-code-user-logo {
+                        color: var(--fortis-cool-gray-);
+            
+                        font-size: 35px;
+                        font-weight: normal;
+                
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                
+                        width: fit-content;
+                        height: fit-content;
+            
+                        .gray {
+                            color: var(--fortis-cool-white);
+                        }
+                    }
+
+                    .fortis-code-btn-initiators {
+                        background: var(--fortis-cool-gray-);
+                        border: 1px solid var(--fortis-cool-gray-);
+                        border-radius: 28px;
+        
+                        color: var(--fortis-cool-black);
+        
+                        font-size: 13px;
+        
+                        cursor: pointer;
+                    
+                        transition: 200ms;
+        
+                        width: 140px;
+                        height: 35px;
+                    }
+                    
+                    .fortis-code-btn-initiators:hover {
+                        background: var(--fortis-cool-black);
+                        border: 1px solid var(--fortis-cool-gray);
+                    
+                        color: var(--fortis-cool-gray-);
+                    }
+                
+                    .fortis-code-btn-initiators:active {
+                        background: var(--fortis-cool-white);
+                        border: 1px solid var(--fortis-cool-white);
+                    
+                        color: var(--fortis-cool-black);
+                    }
+                }
+
+                .fortis-code-user-list {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    flex-direction: column;
+
+                    gap: 21px;
+
+                    padding: 21px;
+
+                    width: 100vw;
+                    min-height: calc(100vh - 224px);
+
+                    .fortis-code-user-list-item {
+                        background: var(--fortis-cool-gray-);
+
+                        border-radius: 14px;
+
+                        font-size: 13px;
+
+                        display: flex;
+                        align-items: center;
+
+                        padding-left: 21px;
+                        padding-right: 21px;
+
+                        width: 400px;
+                        height: fit-content;
+                        min-height: 55px;
+
+                        p {
+                            color: var(--fortis-cool-black);
+                        }
+                    }
+
+                    .fortis-code-user-nothing {
+                        color: var(--fortis-cool-gray);
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 100vw;
+                        height: calc(100vh - 266px);
+                    }
+                }
+            }
+
+            .fortis-code-dashboard-main-transactions {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-direction: column;
+
+                padding: 7px;
+
+                width: 100vw;
+                min-height: calc(100vh - 140px);
+
+                .fortis-code-user {
+                    border-bottom: 1px solid var(--fortis-cool-gray-tr);
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    gap: 50px;
+    
+                    padding-left: 7px;
+                    padding-right: 7px;
+        
+                    width: fit-content;
+                    height: 70px;
+    
+                    .fortis-code-user-logo {
+                        color: var(--fortis-cool-gray-);
+            
+                        font-size: 35px;
+                        font-weight: normal;
+                
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                
+                        width: fit-content;
+                        height: fit-content;
+            
+                        .gray {
+                            color: var(--fortis-cool-white);
+                        }
+                    }
+
+                    .fortis-code-btn-initiators {
+                        background: var(--fortis-cool-gray-);
+                        border: 1px solid var(--fortis-cool-gray-);
+                        border-radius: 28px;
+        
+                        color: var(--fortis-cool-black);
+        
+                        font-size: 13px;
+        
+                        cursor: pointer;
+                    
+                        transition: 200ms;
+        
+                        width: 140px;
+                        height: 35px;
+                    }
+                    
+                    .fortis-code-btn-initiators:hover {
+                        background: var(--fortis-cool-black);
+                        border: 1px solid var(--fortis-cool-gray);
+                    
+                        color: var(--fortis-cool-gray-);
+                    }
+                
+                    .fortis-code-btn-initiators:active {
+                        background: var(--fortis-cool-white);
+                        border: 1px solid var(--fortis-cool-white);
+                    
+                        color: var(--fortis-cool-black);
+                    }
+                }
+
+                .fortis-code-user-list {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    flex-direction: column;
+
+                    gap: 21px;
+
+                    padding: 21px;
+
+                    width: 100vw;
+                    min-height: calc(100vh - 224px);
+
+                    .fortis-code-user-list-item {
+                        background: var(--fortis-cool-gray-);
+
+                        border-radius: 14px;
+
+                        font-size: 13px;
+
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: center;
+                        flex-direction: column;
+
+                        padding-top: 7px;
+                        padding-bottom: 7px;
+                        padding-left: 14px;
+                        padding-right: 14px;
+
+                        width: 300px;
+                        height: fit-content;
+                        min-height: 55px;
+                    }
+
+                    .fortis-code-user-nothing {
+                        color: var(--fortis-cool-gray);
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 100vw;
+                        height: calc(100vh - 266px);
+                    }
+                }
+            }
         }
 
         .fortis-code-dashboard-footer {
@@ -858,4 +1106,20 @@ body {
             }
         }
     }
+}
+
+.fortis-code-error-major {
+    color: var(--fortis-cool-red);
+
+    font-size: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 14px;
+    padding-bottom: 14px;
+
+    width: fit-content;
+    min-height: 21px;
 }

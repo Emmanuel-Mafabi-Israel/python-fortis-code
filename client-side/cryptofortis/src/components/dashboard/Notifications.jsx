@@ -43,23 +43,31 @@ export default function Notifications() {
     }
 
     if (error) {
-        return <ErrorMessage message={error} />;
+        return <ErrorMessage className="fortis-code-error-major" message={error} />;
     }
 
     return (
         <DashboardLayout>
-            <div>
-                <h2>Notifications</h2>
-                <Button onClick={fetchNotifications}>Refresh Notifications</Button>
-                <ul>
+            <div className='fortis-code-dashboard-main-notifications'>
+                <div className='fortis-code-user'>
+                    <div className='fortis-code-user-logo'>Notifications</div>
+                    <Button className='fortis-code-btn-initiators' onClick={fetchNotifications}>Refresh</Button>
+                </div>
+                <ul className='fortis-code-user-list'>
+                    {/* <li className='fortis-code-user-list-item'>
+                        <p>Message: Hello Jesus Loves You!</p>
+                    </li>
+                    <li className='fortis-code-user-list-item'>
+                        <p>Message: Hello Jesus cares for You!</p>
+                    </li> */}
                     {notifications.length > 0 ? (
                         notifications.map((notification) => (
-                            <li key={notification.id}>
+                            <li className='fortis-code-user-list-item' key={notification.id}>
                                 <p>Message: {notification.message}</p>
                             </li>
                         ))
                     ) : (
-                        <p>No Notifications</p>
+                        <p className='fortis-code-user-nothing'>No Notifications</p>
                     )}
                 </ul>
             </div>

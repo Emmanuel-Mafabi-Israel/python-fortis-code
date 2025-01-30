@@ -48,12 +48,14 @@ export default function TransactionHistory() {
 
     return (
         <DashboardLayout>
-            <div>
-                <h2>Transaction History</h2>
-                <ul>
+            <div className='fortis-code-dashboard-main-transactions'>
+                <div className='fortis-code-user'>
+                    <div className='fortis-code-user-logo'>Transaction History</div>
+                </div>
+                <ul className='fortis-code-user-list'>
                     {transactions.length > 0 ? (
                         transactions.map((transaction) => (
-                            <li key={transaction.id}>
+                            <li className='fortis-code-user-list-item' key={transaction.id}>
                                 <p>Transaction Type: {transaction.transaction_type}</p>
                                 <p>Value: {transaction.value}</p>
                                 <p>Timestamp: {transaction.timestamp}</p>
@@ -61,7 +63,7 @@ export default function TransactionHistory() {
                             </li>
                         ))
                     ) : (
-                        <p>No Transactions</p>
+                        <p className='fortis-code-user-nothing'>No Transactions</p>
                     )}
                 </ul>
             </div>

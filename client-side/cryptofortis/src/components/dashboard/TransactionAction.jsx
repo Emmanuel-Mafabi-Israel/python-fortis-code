@@ -62,7 +62,6 @@ export default function TransactionAction() {
                         <option value="direct">Direct</option>
                         <option value="deposit">Deposit</option>
                     </select>
-
                     <Button type="submit" disabled={loading}>
                         {loading ? <LoadingSpinner /> : 'Send Token'}
                     </Button>
