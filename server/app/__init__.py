@@ -3,19 +3,10 @@
 # BY ISRAEL MAFABI EMMANUEL
 
 from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
-from flask_migrate import Migrate
 from flask_cors import CORS  # introducing Cross-Origin-Resource-Sharing 😎
 
-from sqlalchemy import MetaData
-    
-metadata = MetaData(naming_convention={
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-})
+from extensions import db, jwt, migrate
 
-migrate = Migrate()
-jwt = JWTManager()
 
 def create_app(db):
     app = Flask(__name__)
