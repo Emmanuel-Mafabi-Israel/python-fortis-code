@@ -2,13 +2,13 @@
 # FORTIS STARTING POINT,
 # BY ISRAEL MAFABI EMMANUEL
 
-import os
-import sys
+# import os
+# import sys
 from dotenv import load_dotenv
 
 load_dotenv()
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app import create_app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
