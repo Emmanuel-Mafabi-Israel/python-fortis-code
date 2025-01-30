@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Adjust the sys.path to include the server directory
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from app import create_app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
