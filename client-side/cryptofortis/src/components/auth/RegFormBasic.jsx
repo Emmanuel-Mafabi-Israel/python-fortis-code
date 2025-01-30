@@ -1,10 +1,11 @@
 /*
-    GLORY BE TO GOD,
-    FORTIS-CODE,
-    BY ISRAEL MAFABI EMMANUEL
+   GLORY BE TO GOD,
+   FORTIS-CODE,
+   BY ISRAEL MAFABI EMMANUEL
 
-    --- REGISTRATION SCREEN BASIC ---
+   --- REGISTRATION SCREEN BASIC ---
 */
+
 import React, { useState } from 'react';
 
 import InputField from '../common/FortisInputField';
@@ -50,15 +51,15 @@ export default function RegFormBasic({ onSuccess }) {
 
         setLoading(true);
         try {
-            await api.register({ email, password });
+            const data = await api.register({ email, password }); // get response
             // Proceed to the next registration step
             if (onSuccess) {
-                onSuccess();
+                onSuccess(data); // passing down the data
             }
         } catch (err) {
             setError(err.message);
         }
-        
+
         setLoading(false);
     };
 
@@ -87,7 +88,7 @@ export default function RegFormBasic({ onSuccess }) {
                 <InputField
                     className="fortis-code-form-input-fields"
                     placeholder="Verify Password"
-                    type="text"
+                    type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required

@@ -5,22 +5,21 @@
 
     --- REGISTRATION SCREEN PROFILE SETUP ---
 */
-
-import React, { useState } from 'react'; // also add useContext
-
+import React, { useState, useContext } from 'react';
 import InputField from '../common/FortisInputField';
 import Button from '../common/FortisButton';
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
-// import api from '../../api/api'; // Importing the API functions
-// import { AuthContext } from '../../context/AuthContext';
+import api from '../api/api'; // Importing the API functions
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
-export default function RegFormProfile({ onSuccess }) {
-    // const { token } = useContext(AuthContext)
+export default function RegFormProfile({ onSuccess, token }) {
     const [name, setName] = useState('');
-    const [profile_picture, setProfilePicture] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { login: authLogin } = useContext(AuthContext); // context login
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,17 +27,18 @@ export default function RegFormProfile({ onSuccess }) {
         setError('');
         try {
             // Here we would add a function to our api.js file to handle updating the profile
-            // await api.updateUserProfile(token, { name, profile_picture })
+            await api.updateUserProfile(token, { name }) // remove profile picture
             // proceed to the next registration step or complete registration
             if (onSuccess) {
                 onSuccess();
             }
+            authLogin(token); // log in with token before navigating to dashboard
+            navigate('/dashboard')
         } catch (err) {
             setError(err.message);
         }
         setLoading(false);
     };
-
 
     return (
         <form className='fortis-code-registration-form' onSubmit={handleSubmit}>
@@ -52,13 +52,6 @@ export default function RegFormProfile({ onSuccess }) {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                />
-                <InputField
-                    className="fortis-code-form-input-fields"
-                    placeholder="Profile Picture URL"
-                    type="text"
-                    value={profile_picture}
-                    onChange={(e) => setProfilePicture(e.target.value)}
                 />
             </div>
             <div className="fortis-code-form-btn">

@@ -16,6 +16,8 @@ import DashboardLayout from '../layouts/DashboardLayout'
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
 import api from '../api/api'; // Import the API functions
 
+import { Link } from 'react-router-dom';
+
 export default function DashboardMain() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -48,13 +50,15 @@ export default function DashboardMain() {
 
     return (
         <DashboardLayout>
-            <div>
+            <div className='fortis-code-dashboard-main'>
                 {user && (
-                    <>
-                        <h2>Welcome to the Dashboard, {user.email}!</h2>
-                        <p>Balance: {user.balance}</p>
+                    <div className='fortis-code-dashboard-main-container'>
+                        <div className='fortis-code-welcome-text'>
+                        Welcome,&nbsp;{user.profile?.name ? user.profile.name + "!" : <div className='fortis-code-setup-heads-up'><p>Go to <Link className='fortis-code-link-redirect' to="/account">Account Section</Link> and set-up your account credentials.</p></div>}
+                        </div>
+                        <p className='fortis-code-balance-text'>Balance: {user.balance}</p>
                         {/* we'll Display other user details as needed 😉 */}
-                    </>
+                    </div>
                 )}
             </div>
         </DashboardLayout>

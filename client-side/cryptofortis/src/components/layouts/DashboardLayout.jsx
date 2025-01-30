@@ -20,23 +20,29 @@ export default function DashboardLayout({ children }) {
     };
 
     return (
-        <div className="dashboard-layout">
-            <header className="dashboard-header">
-                <h1>Fortis Dashboard</h1>
-                <nav>
-                    <Link to="/dashboard">Home</Link>
-                    <Link to="/account">Account</Link>
-                    <Link to="/notifications">Notifications</Link>
-                    <Link to="/transactions">Transactions</Link>
-                    <Link to="/transact">Transact</Link>
-                    <button onClick={handleLogout}>Logout</button>
+        <div className="fortis-code-dashboard-layout">
+            <header className="fortis-code-dashboard-header">
+                <div className='fortis-code-org'>
+                    <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
+                    <div className='fortis-code-subheading'>cryptofortis</div>
+                </div>
+                <nav className='fortis-code-navbar'>
+                    <Link className='fortis-code-navbar-link' to="/dashboard">Home</Link>
+                    <Link className='fortis-code-navbar-link' to="/account">Account</Link>
+                    <Link className='fortis-code-navbar-link' to="/notifications">Notifications</Link>
+                    <Link className='fortis-code-navbar-link' to="/transactions">Transactions</Link>
+                    <Link className='fortis-code-navbar-link' to="/transact">Transact</Link>
                 </nav>
+                <div className="fortis-code-nav-btn">
+                    <button className={"fortis-code-btn-initiators"} onClick={handleLogout}>Logout</button>
+                </div>
             </header>
-            <main className="dashboard-content">
+            <main className="fortis-code-dashboard-content">
                 {children}
             </main>
-            <footer className="dashboard-footer">
-                <p>© {new Date().getFullYear()} Fortis.</p>
+            <footer className="fortis-code-dashboard-footer">
+                <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
+                <div className='fortis-code-subheading'>© {new Date().getFullYear()} - cryptofortis. by Israel Mafabi Emmanuel</div>
             </footer>
         </div>
     )

@@ -6,32 +6,19 @@
     --- REGISTRATION SCREEN ---
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import RegFormBasic from './RegFormBasic';
-import RegFormProfile from './RegFormProfile';
+import { AuthContext } from '../../context/AuthContext';
 
-export default function Register() {
-    const [registrationStage, setRegistrationStage] = useState(0);
+export default function Registration() {
     const navigate = useNavigate();
+    const { login: authLogin } = React.useContext(AuthContext)
 
-    const handleRegistrationSuccess = () => {
-        setRegistrationStage(1); // Move to profile stage
+    const handleRegistrationSuccess = async (data) => {
+        authLogin(data.access_token);
+        navigate('/login');
     };
-
-    const handleRegistrationComplete = () => {
-        navigate("/dashboard"); // Redirect to dashboard after complete registration
-    }
-    const renderFormStage = () => {
-        switch (registrationStage) {
-            case 0:
-                return <RegFormBasic onSuccess={handleRegistrationSuccess} />
-            case 1:
-                return <RegFormProfile onSuccess={handleRegistrationComplete} />
-            default:
-                return null;
-        }
-    }
 
     return (
         <div className='fortis-code-registration'>
@@ -40,7 +27,7 @@ export default function Register() {
                     <div className='fortis-code-logo'>Fortis<b className='gray'>Code</b></div>
                     <div className='fortis-code-subheading'>Create Your Fortis<b>Code</b>&nbsp;Account</div>
                 </div>
-                {renderFormStage()}
+                <RegFormBasic onSuccess={handleRegistrationSuccess}/>
             </div>
         </div>
     );
