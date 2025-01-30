@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: cryptofortis-server
+    env: python
+    plan: free
+    buildCommand: ""
+    startCommand: gunicorn server.server:app
+  - type: web
+    name: cryptofortis
+    env: static
+    plan: free
+    staticPublishPath: client/build
+    buildCommand: cd client && npm install && npm run build
+    startCommand: cd client && npm start
