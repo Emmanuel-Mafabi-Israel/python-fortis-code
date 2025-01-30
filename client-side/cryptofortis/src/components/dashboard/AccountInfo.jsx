@@ -20,12 +20,12 @@ import DashboardLayout from '../layouts/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 
 export default function AccountInfo() {
-    const [user, setUser] = useState(null);
-    const [name, setName] = useState('');
+    const [user, setUser]       = useState(null);
+    const [name, setName]       = useState('');
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const { token, logout } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const [error, setError]     = useState('');
+    const { token, logout }     = useContext(AuthContext);
+    const navigate              = useNavigate();
 
     const fetchUserDetails = useCallback(async () => {
         setLoading(true);
@@ -70,9 +70,8 @@ export default function AccountInfo() {
         setError('');
         try {
             await api.deleteUser(token);
+            navigate('/account-deleted') // redirect to delete success page.
             logout();
-            navigate('/') // naviagte to welcome page, logging out the user
-
         } catch (err) {
             setError(err.message)
             setLoading(false);
@@ -125,7 +124,6 @@ export default function AccountInfo() {
                                 </Button>
                             </div>
                         </div>
-                        {/* Display other user details as needed */}
                     </div>
                 )}
             </div>

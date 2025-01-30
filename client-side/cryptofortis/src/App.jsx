@@ -15,11 +15,13 @@ import AccountInfo from './components/dashboard/AccountInfo';
 import Notifications from './components/dashboard/Notifications';
 import TransactionHistory from './components/dashboard/TransactionHistory';
 import TransactionAction from './components/dashboard/TransactionAction';
+import AccountDeleted from './components/auth/AccountDeleted';
 
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
 // ProtectedRoute
 const ProtectedRoute = ({ children }) => {
+	// automatically redirects to the login page if authentication fails...
 	const { isAuthenticated } = React.useContext(AuthContext);
 	return isAuthenticated ? children : <Navigate to="/login" />;
 };
@@ -32,6 +34,7 @@ export default function App() {
 					<Route path="/" element={<Welcome />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Registration />} />
+					<Route path="/account-deleted" element={<AccountDeleted />} />
 					<Route path="/dashboard" element={
 						<ProtectedRoute>
 							<DashboardMain />

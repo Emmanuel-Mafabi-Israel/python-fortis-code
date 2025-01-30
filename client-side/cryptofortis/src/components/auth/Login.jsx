@@ -29,6 +29,7 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         setError('');
+        
         try {
             const data = await api.login({ email, password }); // login with api function
             authLogin(data.access_token)
@@ -36,6 +37,7 @@ export default function Login() {
         } catch (err) {
             setError(err.message);
         }
+
         setLoading(false);
     };
 

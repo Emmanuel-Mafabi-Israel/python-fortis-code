@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(getPersistedAuthToken()); // Initialize from persisted token
     const [isAuthenticated, setIsAuthenticated] = useState(!!token);
     const navigate = useNavigate();
-
     const login = useCallback((newToken) => {
         setToken(newToken);
         setIsAuthenticated(true);
@@ -28,10 +27,8 @@ export const AuthProvider = ({ children }) => {
         setToken(null);
         setIsAuthenticated(false);
         removePersistedAuthToken(); // Remove the token
-        // redirect to welcome page
-        navigate("/");
-    }, [navigate]);
-
+        // setShouldNavigateToLogin(true) // for login redirection...
+    }, []);
 
     useEffect(() => {
         setIsAuthenticated(!!token)
