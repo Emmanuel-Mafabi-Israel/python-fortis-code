@@ -1,4 +1,6 @@
-# Fortis: Secure Token Transfer Application, By Israel Mafabi Emmanuel
+# Fortis**Code**: Secure Token Transfer Application
+
+# By Israel Mafabi Emmanuel
 
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
 [![Flask Version](https://img.shields.io/badge/flask-2.x-green.svg)](https://flask.palletsprojects.com/)
