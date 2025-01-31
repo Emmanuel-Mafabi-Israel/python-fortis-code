@@ -16,6 +16,12 @@ from app.services import notify_user, update_balance
 from app.cryptofortis.cryptofortis import fortis_generate_token, fortis_validate_token
 from app.services import update_balance, record_transaction
 
+import logging
+
+# --- setting up logging ---
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+# --- setting up logging ---
+
 # print(f"db.metadata in routes.py before schema: {db.metadata}") -> for debugging purposes
 
 auth_bp             = Blueprint('auth', __name__)
@@ -80,6 +86,9 @@ def delete_user():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email=user_email).first()
     if user:
+        # checking to make sure that the balance of the user is zero
+        if user.balance != 0:
+             return jsonify({'message': 'User balance should be zero before deletion'}), 400
         try:
             #  the user profile deletion will be handled by the cascade in the model
             db.session.delete(user)
@@ -87,7 +96,7 @@ def delete_user():
             return jsonify({'message': 'User account deleted successfully'}), 200
         except Exception as e:
             db.session.rollback()
-            print(f"error deleting the user {e}")
+            logging.error(f"error deleting the user {e}")
             return jsonify({'message':'An error occurred while deleting the user'}), 500
     return jsonify({'message': 'User not found'}), 404
 

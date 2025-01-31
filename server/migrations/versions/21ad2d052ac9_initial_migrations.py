@@ -1,8 +1,8 @@
-"""Initial Migration
+"""Initial Migrations
 
-Revision ID: 2f60727090a7
+Revision ID: 21ad2d052ac9
 Revises: 
-Create Date: 2025-01-30 13:26:40.081220
+Create Date: 2025-01-31 13:37:58.496004
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2f60727090a7'
+revision = '21ad2d052ac9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -45,7 +45,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('activity_type', sa.String(length=255), nullable=False),
     sa.Column('timestamp', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_activities_user_id_users')),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('audit_logs',
@@ -53,40 +53,41 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('action', sa.String(length=255), nullable=False),
     sa.Column('timestamp', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_audit_logs_user_id_users')),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('sender_id', sa.Integer(), nullable=False),
-    sa.Column('recipient_id', sa.Integer(), nullable=False),
+    sa.Column('sender_id', sa.Integer(), nullable=True),
+    sa.Column('recipient_id', sa.Integer(), nullable=True),
     sa.Column('value', sa.Integer(), nullable=False),
     sa.Column('transaction_type', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=True),
     sa.Column('timestamp', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.ForeignKeyConstraint(['recipient_id'], ['users.id'], name=op.f('fk_transactions_recipient_id_users')),
-    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name=op.f('fk_transactions_sender_id_users')),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['recipient_id'], ['users.id'], name='fk_transactions_recipient_id', ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name='fk_transactions_sender_id', ondelete='SET NULL'),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('id', name='uq_transactions_id')
     )
     op.create_table('user_notifications',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('notification_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['notification_id'], ['notifications.id'], name=op.f('fk_user_notifications_notification_id_notifications')),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_notifications_user_id_users')),
+    sa.ForeignKeyConstraint(['notification_id'], ['notifications.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'notification_id')
     )
     op.create_table('user_profiles',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=120), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_profiles_user_id_users')),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('user_roles',
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('role_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('fk_user_roles_role_id_roles')),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_roles_user_id_users')),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('user_id', 'role_id')
     )
     # ### end Alembic commands ###

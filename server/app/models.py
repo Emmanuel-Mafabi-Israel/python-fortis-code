@@ -5,7 +5,7 @@
 # MODELS
 
 from extensions import db
-# import datetime
+from sqlalchemy import ForeignKey, UniqueConstraint
 
 # our association table...
 user_notifications = db.Table('user_notifications',
@@ -35,12 +35,14 @@ class User(db.Model):
 class Transaction(db.Model):
     __tablename__ = 'transactions'
     id               = db.Column(db.Integer, primary_key=True)
-    sender_id        = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    recipient_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    sender_id        = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_sender_id', ondelete='SET NULL'), nullable=True)
+    recipient_id     = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_recipient_id', ondelete='SET NULL'), nullable=True)
     value            = db.Column(db.Integer, nullable=False)
     transaction_type = db.Column(db.String(50), nullable=False)  # e.g., 'deposit', 'withdrawal'
     description      = db.Column(db.String(255), nullable=True) # Description of the transaction
     timestamp        = db.Column(db.DateTime, server_default=db.func.now())
+    
+    __table_args__ = (UniqueConstraint('id', name='uq_transactions_id'),)
 
     def __repr__(self):
         return f"<Transaction id:{self.id}, type:{self.transaction_type}, time:{self.timestamp}>"
