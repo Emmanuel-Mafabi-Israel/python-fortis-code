@@ -12,9 +12,8 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User, Transaction, Notification, UserProfile  # Import models
 from app.schemas import UserSchema, TransactionSchema, NotificationSchema
-from app.services import notify_user, update_balance
 from app.cryptofortis.cryptofortis import fortis_generate_token, fortis_validate_token
-from app.services import update_balance, record_transaction
+from app.services import notify_user, update_balance, handle_transaction
 
 import logging
 
@@ -88,7 +87,7 @@ def delete_user():
     if user:
         # checking to make sure that the balance of the user is zero
         if user.balance != 0:
-             return jsonify({'message': 'User balance should be zero before deletion'}), 400
+            return jsonify({'message': 'User balance should be zero before deletion'}), 400
         try:
             #  the user profile deletion will be handled by the cascade in the model
             db.session.delete(user)
@@ -104,12 +103,12 @@ def delete_user():
 @jwt_required()
 def send_token():
     # for token transfer
-    data = request.json
-    sender_email = get_jwt_identity()
-    value = data.get('value')
+    data            = request.json
+    sender_email    = get_jwt_identity()
+    value           = data.get('value')
     recipient_email = data.get('recipient')
-    method = data.get('method')
-    expiry = data.get('expiry', int(os.getenv('TOKEN_EXPIRY', 14400)))
+    method          = data.get('method')
+    expiry          = data.get('expiry', int(os.getenv('TOKEN_EXPIRY', 14400)))
 
     # prevent weird transactions -self transactions...
     if sender_email == recipient_email:
@@ -121,33 +120,40 @@ def send_token():
         value = int(value)
     except ValueError:
         return jsonify({'error': 'Invalid transaction value'}), 400
-
+    
     # Generate the token
     token = fortis_generate_token(sender_email, value, recipient_email, expiry=expiry)
-
-    if not fortis_validate_token(token):
-        return jsonify({"error": "Invalid token"}), 400
     
-    # Use a method to handle update balance and record transaction as well as notification to be more modular
-    return _handle_transaction(sender_email, recipient_email, value, method, expiry)
-
-def _handle_transaction(sender_email, recipient_email, value, method, expiry):
-    description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
+    if not token:
+        return jsonify({"error": "Token generation failed"}), 500
+    
     try:
-        # update user balances
-        update_balance(sender_email, recipient_email, value)
-        # Record transaction
-        record_transaction(sender_email, recipient_email, value, description)
-        # Add user notification
-        # expiry is coming from send_token
-        notify_user(recipient_email, sender_email, value, expiry, method)
-
-        return jsonify({"message": "Token sent successfully"}), 200
+        # Call the handle_transaction to perform the business logic 
+        handle_transaction(sender_email, recipient_email, value, method, expiry)
+        return jsonify({"message": "Token sent successfully", 'token': token}), 200
     except Exception as e:
-        print(f"Error in _handle_transaction: {e}")
+        logging.error(f"Error in send token route: {e}")
         if "Insufficient Funds" in str(e):
             return jsonify({"error": "Insufficient funds"}), 400
-        return jsonify({'error': f'An error occured during the transaction: {e}'}), 500
+        return jsonify({'error': f'An error occurred during the transaction: {e}'}), 500
+    
+# def _handle_transaction(sender_email, recipient_email, value, method, expiry):
+#     description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
+#     try:
+#         # update user balances
+#         update_balance(sender_email, recipient_email, value)
+#         # Record transaction
+#         record_transaction(sender_email, recipient_email, value, description)
+#         # Add user notification
+#         # expiry is coming from send_token
+#         notify_user(recipient_email, sender_email, value, expiry, method)
+
+#         return jsonify({"message": "Token sent successfully"}), 200
+#     except Exception as e:
+#         print(f"Error in _handle_transaction: {e}")
+#         if "Insufficient Funds" in str(e):
+#             return jsonify({"error": "Insufficient funds"}), 400
+#         return jsonify({'error': f'An error occured during the transaction: {e}'}), 500
 
 @token_bp.route('/notifications', methods=['GET'])
 @jwt_required()

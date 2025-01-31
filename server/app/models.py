@@ -38,7 +38,7 @@ class Transaction(db.Model):
     sender_id        = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_sender_id', ondelete='SET NULL'), nullable=True)
     recipient_id     = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_recipient_id', ondelete='SET NULL'), nullable=True)
     value            = db.Column(db.Integer, nullable=False)
-    transaction_type = db.Column(db.String(50), nullable=False)  # e.g., 'deposit', 'withdrawal'
+    transaction_type = db.Column(db.String(50), nullable=False)  # e.g., 'deposit', 'direct-token transfer'
     description      = db.Column(db.String(255), nullable=True) # Description of the transaction
     timestamp        = db.Column(db.DateTime, server_default=db.func.now())
     
