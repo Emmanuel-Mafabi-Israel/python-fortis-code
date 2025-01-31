@@ -91,6 +91,6 @@ def fortis_breakdown_token(token:str)->tuple:
 #     print(f"Value    : {value}")
 #     print(f"Recipient: {recipient}")
 
-# token_ = "gAAAAABnlMZQUCPPiEukPkxtXuYli-5PP51bkJl9e9VMuRuNW5dAibXwPHoGyDON-0zMQHFVjccbSjDGz8EHq3vkyJnWiToOaKMvpCeBilePt9z32vrwfY1Iq4QgKPesbwkvI0dM_t13vvCe2e2nqXIJHb5c4UIOKictA24ApnkFRx5EqaOew1ztK8v3hHo5HpMBeQa0yjDVhI-rgHZ0s-RBgY-K_38F93gCYMSmDcXngI_gArAgCX1ynwcBVubGjzwc-6Q8-rBH"
-# s, v, r = fortis_breakdown_token(token_)
-# print(f"sender:{s}, value:{v}, reciever:{r}")
+token_ = "gAAAAABnnI6LZDynPaUAfEBoVFuawjIiXneDrfwgi8J6-xRRA4OxzgxSoxhSA_Y1_9aLofen8oAtv_rcHCA_6Ou3xZ3GBWNyFxGo7Bf_jPncWh3JqJqTiyr70VXK8OSrGhuyg0osmSHD2cWOHDe5XRTGXDBRPz3kT9t1mAWkzfHfrBc58-Pm9cl1I-JfnEUNJpF6EbzSAxA0aPoLOJRq7l2zJAyikX7uhlvi1euNeB5d7f8GUll6uNi-EsLBd0Aau2-u65KBDTKu"
+s, v, r = fortis_breakdown_token(token_)
+print(f"sender:{s}, value:{v}, reciever:{r}")

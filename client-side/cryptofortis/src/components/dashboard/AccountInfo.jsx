@@ -71,7 +71,7 @@ export default function AccountInfo() {
         setError('');
         try {
             await api.deleteUser(token);
-            navigate('/account-deleted') // redirect to delete success page.
+            navigate('/login') // redirect to delete success page.
             logout();
         } catch (err) {
             setError(err.message)
