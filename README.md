@@ -121,6 +121,12 @@ Fortis is a secure web application built with Python (Flask) on the **backend** 
 
     *   Open your web browser and go to `http://localhost:3000` to access the Fortis application.
 
+## Model Relationships
+
+Relationships diagram
+
+![](H:\PythonFlaskProjects\python-fortis-code\relationships\FortisCode Relationships.png)
+
 ## API Endpoints (Backend)
 
 | Endpoint         | Method   | Description                         | Authentication Required |
