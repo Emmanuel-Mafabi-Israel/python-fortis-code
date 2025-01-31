@@ -50,6 +50,7 @@ export default function RegFormBasic({ onSuccess }) {
         }
 
         setLoading(true);
+        
         try {
             const data = await api.register({ email, password }); // get response
             // Proceed to the next registration step

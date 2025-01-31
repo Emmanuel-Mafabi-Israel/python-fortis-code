@@ -5,9 +5,10 @@
 
     --- NOTIFICATIONS ---
 */
+
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
-import LoadingSpinner from '../common/FortisLoadingSpinner';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 import Button from '../common/FortisButton';
 
@@ -39,7 +40,7 @@ export default function Notifications() {
     }, [fetchNotifications]);
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingScreen />;
     }
 
     if (error) {
@@ -54,12 +55,6 @@ export default function Notifications() {
                     <Button className='fortis-code-btn-initiators' onClick={fetchNotifications}>Refresh</Button>
                 </div>
                 <ul className='fortis-code-user-list'>
-                    {/* <li className='fortis-code-user-list-item'>
-                        <p>Message: Hello Jesus Loves You!</p>
-                    </li>
-                    <li className='fortis-code-user-list-item'>
-                        <p>Message: Hello Jesus cares for You!</p>
-                    </li> */}
                     {notifications.length > 0 ? (
                         notifications.map((notification) => (
                             <li className='fortis-code-user-list-item' key={notification.id}>

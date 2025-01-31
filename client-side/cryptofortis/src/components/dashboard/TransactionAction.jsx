@@ -18,6 +18,7 @@ import { AuthContext } from '../../context/AuthContext';
 import api from '../api/api'; // Import the API functions
 
 import DashboardLayout from '../layouts/DashboardLayout'
+import LoadingScreen from '../common/FortisLoadingScreen';
 
 export default function TransactionAction() {
     const [recipient, setRecipient] = useState('');
@@ -68,6 +69,10 @@ export default function TransactionAction() {
         }
         setLoading(false);
     };
+
+    if (loading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <DashboardLayout>

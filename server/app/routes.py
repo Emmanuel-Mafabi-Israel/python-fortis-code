@@ -102,6 +102,10 @@ def send_token():
     method = data.get('method')
     expiry = data.get('expiry', int(os.getenv('TOKEN_EXPIRY', 14400)))
 
+    # prevent weird transactions -self transactions...
+    if sender_email == recipient_email:
+        return jsonify({"error": "Cannot send tokens to yourself"}), 400
+
     if not all([value, recipient_email, method, expiry]):
         return jsonify({"error": "Missing required fields"}), 400
     try:

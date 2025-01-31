@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 
-import LoadingSpinner from '../common/FortisLoadingSpinner';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -39,7 +39,7 @@ export default function TransactionHistory() {
     }, [token]);
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingScreen />;
     }
 
     if (error) {

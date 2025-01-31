@@ -14,6 +14,8 @@ import Button from '../common/FortisButton';
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
 
+// import LoadingScreen from '../common/FortisLoadingScreen';
+
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
 import api from '../api/api'; // Import the API functions
 
@@ -37,7 +39,6 @@ export default function Login() {
         } catch (err) {
             setError(err.message);
         }
-
         setLoading(false);
     };
 

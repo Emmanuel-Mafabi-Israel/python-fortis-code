@@ -8,7 +8,8 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 
-import LoadingSpinner from '../common/FortisLoadingSpinner';
+// import LoadingSpinner from '../common/FortisLoadingSpinner';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import DashboardLayout from '../layouts/DashboardLayout'
@@ -40,8 +41,9 @@ export default function DashboardMain() {
         fetchUserDetails();
     }, [token]);
 
+
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingScreen />;
     }
 
     if (error) {
@@ -69,7 +71,6 @@ export default function DashboardMain() {
                             <div className="balance"> <div className="symbol">FTK</div>{user.balance}</div>
                             <div className="indicator">Available balance</div>
                         </div>
-                        {/* we'll Display other user details as needed 😉 */}
                     </div>
                 )}
             </div>

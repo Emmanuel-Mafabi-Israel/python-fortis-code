@@ -11,6 +11,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
 import InputField from '../common/FortisInputField';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import Button from '../common/FortisButton';
 
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
@@ -80,7 +81,7 @@ export default function AccountInfo() {
     }
 
     if (loading) {
-        return <LoadingSpinner />;
+        return <LoadingScreen />;
     }
 
     if (error) {
