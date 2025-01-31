@@ -9,14 +9,14 @@
 export default function LoadingScreen() {
     return (
         <div className="fortis-code-loading-screen">
-            <div class="loading-bars">
-                <span class="bar -first"  ></span>
-                <span class="bar -second" ></span>
-                <span class="bar -third"  ></span>
-                <span class="bar -fourth" ></span>
-                <span class="bar -fifth"  ></span>
-                <span class="bar -sixth"  ></span>
-                <span class="bar -seventh"></span>
+            <div className="loading-bars">
+                <span className="bar -first"  ></span>
+                <span className="bar -second" ></span>
+                <span className="bar -third"  ></span>
+                <span className="bar -fourth" ></span>
+                <span className="bar -fifth"  ></span>
+                <span className="bar -sixth"  ></span>
+                <span className="bar -seventh"></span>
             </div>
         </div>
     )
