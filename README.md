@@ -125,7 +125,7 @@ Fortis is a secure web application built with Python (Flask) on the **backend** 
 
 Relationships diagram
 
-![FortisCode ERD](https://raw.githubusercontent.com/Emmanuel-Mafabi-Israel/python-fortis-code/refs/heads/main/relationships/FortisCode%20Relationships.png?token=GHSAT0AAAAAAC6BWCCAM4RND6CE5GHDLG5AZ44HBAA)
+![FortisCode ERD](relationships/fortiscode_relationships.png)
 
 ## API Endpoints (Backend)
 
