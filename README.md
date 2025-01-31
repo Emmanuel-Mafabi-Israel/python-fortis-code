@@ -6,7 +6,7 @@
 [![Flask Version](https://img.shields.io/badge/flask-2.x-green.svg)](https://flask.palletsprojects.com/)
 [![React Version](https://img.shields.io/badge/react-17%2B-blue.svg)](https://reactjs.org/)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Mafabi](https://img.shields.io/badge/By%20Israel-Mafabi-Emmanuel)]
+![Mafabi](https://img.shields.io/badge/By%20Israel-Mafabi-Emmanuel)
 
 ## Overview
 
