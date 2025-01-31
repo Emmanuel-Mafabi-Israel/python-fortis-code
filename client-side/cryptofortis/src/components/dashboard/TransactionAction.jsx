@@ -15,10 +15,9 @@ import ErrorMessage from '../common/FortisErrorMessage';
 import SuccessMessage from '../common/FortisSuccessMessage';
 
 import { AuthContext } from '../../context/AuthContext';
-import api from '../api/api'; // Import the API functions
-
-import DashboardLayout from '../layouts/DashboardLayout'
-import LoadingScreen from '../common/FortisLoadingScreen';
+import api from '../api/api';
+import DashboardLayout from '../layouts/DashboardLayout';
+// import LoadingScreen from '../common/FortisLoadingScreen';
 
 export default function TransactionAction() {
     const [recipient, setRecipient] = useState('');
@@ -27,17 +26,14 @@ export default function TransactionAction() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-    const { token } = useContext(AuthContext)
-
+    const { token } = useContext(AuthContext);
 
     useEffect(() => {
         if (error) {
             console.log('Error State:', error);
-
             const timer = setTimeout(() => {
                 setError('');
             }, 3000);
-
             return () => clearTimeout(timer);
         }
     }, [error]);
@@ -48,31 +44,24 @@ export default function TransactionAction() {
             const timer = setTimeout(() => {
                 setSuccessMessage('');
             }, 3000);
-
             return () => clearTimeout(timer);
         }
     }, [successMessage]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!loading) {
-            setLoading(true);
-        }
+        setLoading(true);
         setError('');
         setSuccessMessage('');
         try {
             const response = await api.sendToken(token, { recipient, value, method });
-            setSuccessMessage(response.message)
+            setSuccessMessage(response.message);
             console.log('data from send token', response);
         } catch (err) {
             setError(err.message);
         }
         setLoading(false);
     };
-
-    if (loading) {
-        return <LoadingScreen />;
-    }
 
     return (
         <DashboardLayout>
@@ -117,4 +106,4 @@ export default function TransactionAction() {
             </div>
         </DashboardLayout>
     );
-};
+}

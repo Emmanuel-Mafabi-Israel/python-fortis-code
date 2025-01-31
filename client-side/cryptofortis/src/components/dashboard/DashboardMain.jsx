@@ -9,7 +9,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 // import LoadingSpinner from '../common/FortisLoadingSpinner';
-import LoadingScreen from '../common/FortisLoadingScreen';
+// import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import DashboardLayout from '../layouts/DashboardLayout'
@@ -43,7 +43,7 @@ export default function DashboardMain() {
 
 
     if (loading) {
-        return <LoadingScreen />;
+        console.log("Loading data...")
     }
 
     if (error) {

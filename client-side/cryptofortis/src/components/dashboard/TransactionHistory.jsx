@@ -8,13 +8,12 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 
-import LoadingScreen from '../common/FortisLoadingScreen';
+// import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import { AuthContext } from '../../context/AuthContext';
-import api from '../api/api'; // Import the API functions
-
-import DashboardLayout from '../layouts/DashboardLayout'
+import api from '../api/api';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function TransactionHistory() {
     const [transactions, setTransactions] = useState([]);
@@ -39,7 +38,7 @@ export default function TransactionHistory() {
     }, [token]);
 
     if (loading) {
-        return <LoadingScreen />;
+        console.log("Loading data...")
     }
 
     if (error) {
@@ -69,4 +68,4 @@ export default function TransactionHistory() {
             </div>
         </DashboardLayout>
     );
-};
+}

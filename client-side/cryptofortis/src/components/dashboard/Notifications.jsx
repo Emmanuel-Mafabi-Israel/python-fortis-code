@@ -8,14 +8,13 @@
 
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
-import LoadingScreen from '../common/FortisLoadingScreen';
+// import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 import Button from '../common/FortisButton';
 
 import { AuthContext } from '../../context/AuthContext';
-import api from '../api/api'; // Import the API functions
-
-import DashboardLayout from '../layouts/DashboardLayout'
+import api from '../api/api';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function Notifications() {
     const [notifications, setNotifications] = useState([]);
@@ -40,7 +39,7 @@ export default function Notifications() {
     }, [fetchNotifications]);
 
     if (loading) {
-        return <LoadingScreen />;
+        console.log("Loading data...")
     }
 
     if (error) {
@@ -68,4 +67,4 @@ export default function Notifications() {
             </div>
         </DashboardLayout>
     );
-};
+}

@@ -14,9 +14,8 @@ import InputField from '../common/FortisInputField';
 import LoadingScreen from '../common/FortisLoadingScreen';
 import Button from '../common/FortisButton';
 
-import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
-import api from '../api/api'; // Import the API functions
-
+import { AuthContext } from '../../context/AuthContext';
+import api from '../api/api';
 import DashboardLayout from '../layouts/DashboardLayout';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,7 +36,6 @@ export default function AccountInfo() {
             if (data && data.profile && data.profile.name) {
                 setName(data.profile.name)
             }
-
         } catch (err) {
             setError(err.message);
         }
@@ -49,7 +47,7 @@ export default function AccountInfo() {
     }, [fetchUserDetails]);
 
     const handleNameChange = (e) => {
-        setName(e.target.value)
+        setName(e.target.value);
     }
 
     const handleUpdateName = async (e) => {
@@ -58,12 +56,14 @@ export default function AccountInfo() {
         setError('');
         try {
             await api.updateUserProfile(token, { name });
+            setUser((prevUser) => ({
+                ...prevUser,
+                profile: { ...prevUser.profile, name }
+            }));
         } catch (err) {
-            setError(err.message)
+            setError(err.message);
         }
         setLoading(false);
-        // Refetch details after update
-        fetchUserDetails();
     }
 
     const handleDeleteAccount = async () => {
@@ -71,16 +71,15 @@ export default function AccountInfo() {
         setError('');
         try {
             await api.deleteUser(token);
-            navigate('/login') // redirect to delete success page.
+            navigate('/login');
             logout();
         } catch (err) {
-            setError(err.message)
+            setError(err.message);
             setLoading(false);
         }
-
     }
 
-    if (loading) {
+    if (loading && !user) {
         return <LoadingScreen />;
     }
 
@@ -92,8 +91,8 @@ export default function AccountInfo() {
         <DashboardLayout>
             <div className='fortis-code-dashboard-main-accounts'>
                 <div className='fortis-code-user'>
-                    <div className='fortis-code-user-logo'>{user.profile?.name ? user.profile.name : <div className='fortis-code-setup-heads-up'>Setup your account name please!</div>}</div>
-                    <div className='fortis-code-user-subheading'>{user.email}</div>
+                    <div className='fortis-code-user-logo'>{user?.profile?.name ? user.profile.name : <div className='fortis-code-setup-heads-up'></div>}</div>
+                    <div className='fortis-code-user-subheading'>{user?.email}</div>
                 </div>
                 {user && (
                     <div className='fortis-code-user-account-info'>
