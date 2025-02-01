@@ -1,3 +1,7 @@
+# GLORY BE TO GOD,
+# FORTISCODE MODELS SCHEMA,
+# BY ISRAEL MAFABI EMMANUEL
+
 from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models import User, Transaction, Notification, AuditLog, UserProfile, Role, Activity
@@ -10,18 +14,9 @@ class UserSchema(SQLAlchemyAutoSchema):
         include_relationships = True
 
 class TransactionSchema(SQLAlchemyAutoSchema):
-    sender_email = fields.Method("get_sender_email", dump_only=True)
-    recipient_email = fields.Method("get_recipient_email", dump_only=True)
     class Meta:
         model = Transaction
         load_instance = True
-
-    def get_sender_email(self, obj):
-        return obj.sender.email if obj.sender else "CryptoFortis - System"
-
-    def get_recipient_email(self, obj):
-       return obj.recipient.email if obj.recipient else "CryptoFortis - System"
-    
 
 class NotificationSchema(SQLAlchemyAutoSchema):
     class Meta:

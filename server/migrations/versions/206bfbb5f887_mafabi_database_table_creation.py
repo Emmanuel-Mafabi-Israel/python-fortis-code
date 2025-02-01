@@ -1,8 +1,8 @@
-"""mafabi: DB Creation
+"""mafabi: database, table creation.
 
-Revision ID: 0bff90b8c34d
+Revision ID: 206bfbb5f887
 Revises: 
-Create Date: 2025-02-01 03:12:11.156551
+Create Date: 2025-02-01 14:52:24.948306
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0bff90b8c34d'
+revision = '206bfbb5f887'
 down_revision = None
 branch_labels = None
 depends_on = None

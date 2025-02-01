@@ -18,7 +18,7 @@ class User(db.Model):
     id            = db.Column(db.Integer, primary_key=True)
     email         = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    balance       = db.Column(db.Integer, default=0)
+    balance       = db.Column(db.Integer, default=500)
     # table relationships
     sent_transactions  = db.relationship('Transaction', backref='sender', lazy=True, foreign_keys='[Transaction.sender_id]')
     received_transactions = db.relationship('Transaction', backref='recipient', lazy=True, foreign_keys='[Transaction.recipient_id]')
@@ -38,8 +38,8 @@ class Transaction(db.Model):
     sender_id        = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_sender_id', ondelete='SET NULL'), nullable=True)
     recipient_id     = db.Column(db.Integer, ForeignKey('users.id', name='fk_transactions_recipient_id', ondelete='SET NULL'), nullable=True)
     value            = db.Column(db.Integer, nullable=False)
-    transaction_type = db.Column(db.String(50), nullable=False)  # e.g., 'deposit', 'direct-token transfer'
-    description      = db.Column(db.String(255), nullable=True) # Description of the transaction
+    transaction_type = db.Column(db.String(50), nullable=False)
+    description      = db.Column(db.String(255), nullable=True)
     timestamp        = db.Column(db.DateTime, server_default=db.func.now())
     
     __table_args__ = (UniqueConstraint('id', name='uq_transactions_id'),)

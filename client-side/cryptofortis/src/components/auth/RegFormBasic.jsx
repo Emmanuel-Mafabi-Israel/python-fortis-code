@@ -7,13 +7,12 @@
 */
 
 import React, { useState } from 'react';
-
 import InputField from '../common/FortisInputField';
 import Button from '../common/FortisButton';
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
-
 import api from '../api/api';
+import { useNavigate } from 'react-router-dom'; // importing navigation functionality
 
 export default function RegFormBasic({ onSuccess }) {
     const [email, setEmail] = useState('');
@@ -21,24 +20,22 @@ export default function RegFormBasic({ onSuccess }) {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const validatePassword = () => {
         if (password.length < 8) {
             setError("Password must be at least 8 characters long.");
             return false;
         }
-
         if (password !== confirmPassword) {
             setError("Passwords do not match.");
             return false;
         }
-
         if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
             setError("Password must contain at least one uppercase and one lowercase letter.");
             return false;
         }
-
-        setError("") // remove errors
+        setError("")
         return true
     };
 
@@ -48,19 +45,14 @@ export default function RegFormBasic({ onSuccess }) {
         if (!validatePassword()) {
             return;
         }
-
         setLoading(true);
-        
+
         try {
-            const data = await api.register({ email, password }); // get response
-            // Proceed to the next registration step
-            if (onSuccess) {
-                onSuccess(data); // passing down the data
-            }
+            await api.register({ email, password });
+            navigate("/login");
         } catch (err) {
             setError(err.message);
         }
-
         setLoading(false);
     };
 

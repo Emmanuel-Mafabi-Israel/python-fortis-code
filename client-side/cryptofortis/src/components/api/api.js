@@ -26,35 +26,35 @@ const apiCall = async (url, method = 'GET', body = null, headers = {}) => {
     try {
         const SERVER_RESPONSE = await fetch(`${API_BASE_URL()}${url}`, options)
         if (SERVER_RESPONSE.ok) {
-            const DATA = await SERVER_RESPONSE.json();
-            return DATA;
+            return await SERVER_RESPONSE.json();
         } else {
-            let ERROR_MESSAGE;
+            let errorMessage;
             try {
-                const ERROR_DATA = await SERVER_RESPONSE.json()
-                ERROR_MESSAGE = ERROR_DATA.error || ERROR_DATA.message || `Request failed with status: ${SERVER_RESPONSE.status}`
+                const errorData = await SERVER_RESPONSE.json();
+                errorMessage = errorData.error || errorData.message || `Request failed with status: ${SERVER_RESPONSE.status}`;
             } catch (jsonError) {
-                ERROR_MESSAGE = `Error: ${await SERVER_RESPONSE.text()} or Request failed with status: ${SERVER_RESPONSE.status}`;
+                errorMessage = `Error: ${await SERVER_RESPONSE.text()} or Request failed with status: ${SERVER_RESPONSE.status}`;
             }
-
-            // for debugging purposes...
-            console.log(ERROR_MESSAGE)
-            throw new Error(ERROR_MESSAGE) // pass the error message
+            console.error(`API Error: ${errorMessage}`);
+            if (SERVER_RESPONSE.status === 401) {
+                throw new Error('Unauthorized access, please log in');
+            }
+            throw new Error(errorMessage);
         }
-    } catch (API_ERROR) {
-        console.log(`API error: ${API_ERROR}`)
-        throw API_ERROR;
+    } catch (error) {
+        console.error(`API Error: ${error}`);
+        throw error;
     }
 };
 
 // API call functions
-const register = (userData) => apiCall('/register', 'POST', userData);
-const login = (credentials) => apiCall('/login', 'POST', credentials);
-const deleteUser = (token) => apiCall('/user', 'DELETE', null, { 'Authorization': `Bearer ${token}` });
-const getUserDetails = (token) => apiCall('/user', 'GET', null, { 'Authorization': `Bearer ${token}` });
-const sendToken = (token, payload) => apiCall('/send_token', 'POST', payload, { 'Authorization': `Bearer ${token}` });
-const getNotifications = (token) => apiCall('/notifications', 'GET', null, { 'Authorization': `Bearer ${token}` });
-const getTransactions = (token) => apiCall('/transactions', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const register          = (userData) => apiCall('/register', 'POST', userData);
+const login             = (credentials) => apiCall('/login', 'POST', credentials);
+const deleteUser        = (token) => apiCall('/user', 'DELETE', null, { 'Authorization': `Bearer ${token}` });
+const getUserDetails    = (token) => apiCall('/user', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const sendToken         = (token, payload) => apiCall('/send_token', 'POST', payload, { 'Authorization': `Bearer ${token}` });
+const getNotifications  = (token) => apiCall('/notifications', 'GET', null, { 'Authorization': `Bearer ${token}` });
+const getTransactions   = (token) => apiCall('/transactions', 'GET', null, { 'Authorization': `Bearer ${token}` });
 const updateUserProfile = (token, payload) => apiCall('/user', 'PATCH', payload, { 'Authorization': `Bearer ${token}` });
 
 const api = {

@@ -1,17 +1,14 @@
 // DashboardLayout.jsx
 
-import React, { useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
+import LoadingScreen from '../common/FortisLoadingScreen';
 
 const DashboardLayout = React.memo(({ children }) => {
-    const { logout } = useContext(AuthContext);
+     const { logout, isLoading } = useContext(AuthContext);
 
-    const handleLogout = useCallback(() => {
-        logout();
-    }, [logout]);
-
-    return (
+    return isLoading ? (<LoadingScreen />): (
         <div className="fortis-code-dashboard-layout">
             <header className="fortis-code-dashboard-header">
                 <div className='fortis-code-org'>
@@ -26,7 +23,7 @@ const DashboardLayout = React.memo(({ children }) => {
                     <Link className='fortis-code-navbar-link' to="/transact">Transact</Link>
                 </nav>
                 <div className="fortis-code-nav-btn">
-                    <button className={"fortis-code-btn-initiators"} onClick={handleLogout}>Logout</button>
+                    <button className={"fortis-code-btn-initiators"} onClick={logout}>Logout</button>
                 </div>
             </header>
             <main className="fortis-code-dashboard-content">

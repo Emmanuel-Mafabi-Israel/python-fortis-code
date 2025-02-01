@@ -6,7 +6,7 @@
 */
 
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { persistAuthToken, getPersistedAuthToken, removePersistedAuthToken } from '../utils/authUtils';
 import api from '../components/api/api'
 
@@ -16,49 +16,71 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(getPersistedAuthToken());
     const [isAuthenticated, setIsAuthenticated] = useState(!!token);
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const fetchUserDetails = useCallback(async (newToken) => {
+        console.log("Fetching user details with token:", newToken);
         try {
             const data = await api.getUserDetails(newToken);
             setUser(data);
+            console.log("User details fetched:", data);
         } catch (err) {
-            console.error(err);
-        }
-    }, []);
-
-    const login = useCallback(async (newToken) => {
-        setToken(newToken);
-        setIsAuthenticated(true);
-        persistAuthToken(newToken);
-        try {
-            await fetchUserDetails(newToken);
-            navigate("/dashboard");
-        } catch(e) {
-            removePersistedAuthToken(); // remove the incorrect token
+            console.error("Error fetching user details: ", err);
+            removePersistedAuthToken();
             setToken(null);
             setIsAuthenticated(false);
             setUser(null);
-            console.log("Error fetching user details after login: ", e);
-             navigate("/login")
+            navigate("/login");
         }
-    }, [navigate, fetchUserDetails]);
+    }, [navigate]);
+
+    const login = useCallback(async (newToken) => {
+        console.log("Login with token:", newToken);
+        setIsLoading(true);
+        setToken(newToken);
+        setIsAuthenticated(true);
+        persistAuthToken(newToken);
+        setTimeout(() => {
+            setIsLoading(false);
+            navigate("/dashboard");
+        }, 1000);
+    }, [navigate]);
 
     const logout = useCallback(() => {
-        setToken(null);
-        setIsAuthenticated(false);
-        setUser(null);
-        removePersistedAuthToken();
-    }, []);
+        console.log("Logout initiated");
+        setIsLoading(true);
+        console.log("Logout isLoading set to:", true);
+        setTimeout(() => {
+            setToken(null);
+            setIsAuthenticated(false);
+            setUser(null);
+            removePersistedAuthToken();
+            setIsLoading(false);
+            console.log("Logout isLoading set to:", false);
+            navigate("/login");
+        }, 1000);
+    }, [navigate]);
 
     useEffect(() => {
+        console.log("useEffect triggered:", location.pathname, token);
         const initialToken = getPersistedAuthToken();
-        if (initialToken) {
-          setToken(initialToken);
-          setIsAuthenticated(true);
-          fetchUserDetails(initialToken);
+        if (initialToken && location.pathname === '/dashboard' && initialToken !== 'undefined') {
+            setToken(initialToken);
+            setIsAuthenticated(true);
+            try {
+                fetchUserDetails(initialToken);
+            } catch (error) {
+                console.error("Error on app load: ", error)
+                removePersistedAuthToken()
+                setToken(null);
+                setIsAuthenticated(false);
+                setUser(null);
+                navigate("/login");
+            }
         }
-      }, [fetchUserDetails]);
+    }, [fetchUserDetails, location, navigate, token]);
 
     const value = {
         token,
@@ -66,7 +88,8 @@ export const AuthProvider = ({ children }) => {
         user,
         login,
         logout,
-        setUser  // Including setUser to update the user state in child components
+        isLoading,
+        setUser
     };
 
     return (

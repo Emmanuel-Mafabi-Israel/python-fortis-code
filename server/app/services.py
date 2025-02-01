@@ -3,6 +3,12 @@
 # BY ISRAEL MAFABI EMMANUEL
 
 # services.py
+# GLORY BE TO GOD,
+# FORTIS SERVICES,
+# BY ISRAEL MAFABI EMMANUEL
+
+# services.py
+
 import os
 
 from extensions import db
@@ -65,8 +71,7 @@ def record_transaction(sender_email, recipient_email, value, description=None):
     recipient = User.query.filter_by(email=recipient_email).first()
     sender_id = sender.id if sender else None
     recipient_id = recipient.id if recipient else None
-    transaction_type = "Direct Deposit" if "deposit" in description.lower() else "Token Share" # Derive from the description.
-    
+    transaction_type = "Direct Deposit" if "deposit" in description.lower() else "Token Share"
     try:
         int_value = int(value)  # Ensure the value is an integer
         transaction = Transaction(
@@ -82,8 +87,8 @@ def record_transaction(sender_email, recipient_email, value, description=None):
     except Exception as e:
         db.session.rollback()
         print(f"Error recording transaction: {e}")
-        raise e 
-    
+        raise e
+
 # Transaction handler!!!
 def handle_transaction(sender_email, recipient_email, value, method, expiry):
     description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
