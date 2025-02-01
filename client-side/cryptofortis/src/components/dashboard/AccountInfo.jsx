@@ -7,6 +7,7 @@
 */
 
 import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import LoadingSpinner from '../common/FortisLoadingSpinner';
 import ErrorMessage from '../common/FortisErrorMessage';
@@ -17,29 +18,31 @@ import Button from '../common/FortisButton';
 import { AuthContext } from '../../context/AuthContext';
 import api from '../api/api';
 import DashboardLayout from '../layouts/DashboardLayout';
-import { useNavigate } from 'react-router-dom';
 
 export default function AccountInfo() {
     const [user, setUser] = useState(null);
     const [name, setName] = useState('');
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const { token, logout } = useContext(AuthContext);
+    const { token, logout, setUser: setUserContext } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    // derive loading state from user
+    const loading = !user;
+
     const fetchUserDetails = useCallback(async () => {
-        setLoading(true);
         setError('');
         try {
             const data = await api.getUserDetails(token);
             setUser(data);
             if (data && data.profile && data.profile.name) {
-                setName(data.profile.name)
+                setName(data.profile.name);
+            } else {
+                setName(""); // set empty if no name is set
             }
         } catch (err) {
             setError(err.message);
+            setUser(null);
         }
-        setLoading(false);
     }, [token]);
 
     useEffect(() => {
@@ -48,38 +51,40 @@ export default function AccountInfo() {
 
     const handleNameChange = (e) => {
         setName(e.target.value);
-    }
+    };
 
     const handleUpdateName = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
         try {
-            await api.updateUserProfile(token, { name });
-            setUser((prevUser) => ({
-                ...prevUser,
-                profile: { ...prevUser.profile, name }
-            }));
+            const updatedUser = await api.updateUserProfile(token, { name });
+            if (updatedUser) {
+                setUser(updatedUser);
+                setUserContext(updatedUser);
+            } else {
+                setError("Failed to update profile");
+            }
         } catch (err) {
             setError(err.message);
         }
-        setLoading(false);
-    }
+    };
 
     const handleDeleteAccount = async () => {
-        setLoading(true);
         setError('');
         try {
             await api.deleteUser(token);
-            navigate('/login');
             logout();
+            navigate('/login');
         } catch (err) {
             setError(err.message);
-            setLoading(false);
         }
-    }
+    };
 
-    if (loading && !user) {
+    // trigger text -> new user's will have to setup their account names...
+    const namePlaceholder = user?.profile?.name ? "Change Your Initials" : "Set Up Your Initials";
+    const userLogoText    = user?.profile?.name ? user?.profile?.name : "Set Up Your Initials";
+
+    if (loading) {
         return <LoadingScreen />;
     }
 
@@ -91,14 +96,14 @@ export default function AccountInfo() {
         <DashboardLayout>
             <div className='fortis-code-dashboard-main-accounts'>
                 <div className='fortis-code-user'>
-                    <div className='fortis-code-user-logo'>{user?.profile?.name ? user.profile.name : <div className='fortis-code-setup-heads-up'></div>}</div>
+                    <div className='fortis-code-user-logo'>{userLogoText}</div>
                     <div className='fortis-code-user-subheading'>{user?.email}</div>
                 </div>
                 {user && (
                     <div className='fortis-code-user-account-info'>
                         <div className='fortis-code-user-account-balance-dramatic'>
                             <div className='balance'>
-                                <div className='symbol'>FTK</div>&nbsp;{user.balance}
+                                <div className='symbol'>FTK</div> {user.balance}
                             </div>
                             <div className='indicator'>Available balance</div>
                         </div>
@@ -106,7 +111,7 @@ export default function AccountInfo() {
                             <form className='fortis-code-user-account-changes-form' onSubmit={handleUpdateName}>
                                 <InputField
                                     className="fortis-code-form-input-fields"
-                                    placeholder="Change Your Initials"
+                                    placeholder={namePlaceholder}
                                     type="text"
                                     value={name}
                                     onChange={handleNameChange}

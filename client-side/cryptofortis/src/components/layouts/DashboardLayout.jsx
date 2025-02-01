@@ -1,22 +1,15 @@
-/*
-    GLORY BE TO GOD,
-    FORTIS-CODE,
-    BY ISRAEL MAFABI EMMANUEL
+// DashboardLayout.jsx
 
-    --- DASHBOARD LAYOUT ---
-*/
-
-import React, { useContext } from 'react';
+import React, { useContext, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
 
-export default function DashboardLayout({ children }) {
+const DashboardLayout = React.memo(({ children }) => {
     const { logout } = useContext(AuthContext);
-    // const navigate   = useNavigate()
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         logout();
-    };
+    }, [logout]);
 
     return (
         <div className="fortis-code-dashboard-layout">
@@ -44,5 +37,7 @@ export default function DashboardLayout({ children }) {
                 <div className='fortis-code-subheading'>© {new Date().getFullYear()} - cryptofortis. by Israel Mafabi Emmanuel</div>
             </footer>
         </div>
-    )
-}
+    );
+});
+
+export default DashboardLayout;

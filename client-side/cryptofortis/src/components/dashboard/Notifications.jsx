@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 
-// import LoadingScreen from '../common/FortisLoadingScreen';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 import Button from '../common/FortisButton';
 
@@ -17,21 +17,21 @@ import api from '../api/api';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 export default function Notifications() {
-    const [notifications, setNotifications] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState(null);
     const [error, setError] = useState('');
     const { token } = useContext(AuthContext);
 
+    const loading = !notifications; // derive loading state from notifications
+
     const fetchNotifications = useCallback(async () => {
-        setLoading(true);
         setError('');
         try {
             const data = await api.getNotifications(token);
             setNotifications(data);
         } catch (err) {
             setError(err.message);
+            setNotifications(null); // set notifications to null to trigger error state
         }
-        setLoading(false);
     }, [token]);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function Notifications() {
     }, [fetchNotifications]);
 
     if (loading) {
-        console.log("Loading data...")
+        return <LoadingScreen />;
     }
 
     if (error) {
@@ -54,7 +54,7 @@ export default function Notifications() {
                     <Button className='fortis-code-btn-initiators' onClick={fetchNotifications}>Refresh</Button>
                 </div>
                 <ul className='fortis-code-user-list'>
-                    {notifications.length > 0 ? (
+                    {notifications?.length > 0 ? (
                         notifications.map((notification) => (
                             <li className='fortis-code-user-list-item' key={notification.id}>
                                 <p>Message: {notification.message}</p>

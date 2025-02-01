@@ -17,7 +17,6 @@ import SuccessMessage from '../common/FortisSuccessMessage';
 import { AuthContext } from '../../context/AuthContext';
 import api from '../api/api';
 import DashboardLayout from '../layouts/DashboardLayout';
-// import LoadingScreen from '../common/FortisLoadingScreen';
 
 export default function TransactionAction() {
     const [recipient, setRecipient] = useState('');
@@ -50,13 +49,34 @@ export default function TransactionAction() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
         setSuccessMessage('');
+
+        if (!recipient) {
+            setError('Recipient email is required.');
+            return;
+        }
+
+        if (!value) {
+            setError('Transaction value is required.');
+            return;
+        }
+
+        const parsedValue = parseFloat(value); // check if the value is a number
+        if (isNaN(parsedValue)) {
+            setError('Transaction value is not a valid number');
+            return;
+        }
+
+        if (parsedValue <= 0) {
+            setError('Transaction value must be greater than zero.');
+            return;
+        }
+
+        setLoading(true);
         try {
-            const response = await api.sendToken(token, { recipient, value, method });
+            const response = await api.sendToken(token, { recipient, value: parsedValue, method });
             setSuccessMessage(response.message);
-            console.log('data from send token', response);
         } catch (err) {
             setError(err.message);
         }

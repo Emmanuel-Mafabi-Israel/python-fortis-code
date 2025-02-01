@@ -1,8 +1,8 @@
-"""Initial Migrations
+"""mafabi: DB Creation
 
-Revision ID: 21ad2d052ac9
+Revision ID: 0bff90b8c34d
 Revises: 
-Create Date: 2025-01-31 13:37:58.496004
+Create Date: 2025-02-01 03:12:11.156551
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '21ad2d052ac9'
+revision = '0bff90b8c34d'
 down_revision = None
 branch_labels = None
 depends_on = None

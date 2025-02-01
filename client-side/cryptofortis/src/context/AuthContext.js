@@ -27,12 +27,21 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const login = useCallback((newToken) => {
+    const login = useCallback(async (newToken) => {
         setToken(newToken);
         setIsAuthenticated(true);
         persistAuthToken(newToken);
-        fetchUserDetails(newToken);
-        navigate("/dashboard");
+        try {
+            await fetchUserDetails(newToken);
+            navigate("/dashboard");
+        } catch(e) {
+            removePersistedAuthToken(); // remove the incorrect token
+            setToken(null);
+            setIsAuthenticated(false);
+            setUser(null);
+            console.log("Error fetching user details after login: ", e);
+             navigate("/login")
+        }
     }, [navigate, fetchUserDetails]);
 
     const logout = useCallback(() => {
@@ -43,10 +52,13 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if (token) {
-            fetchUserDetails(token);
+        const initialToken = getPersistedAuthToken();
+        if (initialToken) {
+          setToken(initialToken);
+          setIsAuthenticated(true);
+          fetchUserDetails(initialToken);
         }
-    }, [token, fetchUserDetails]);
+      }, [fetchUserDetails]);
 
     const value = {
         token,

@@ -2,6 +2,8 @@
 # FORTIS INITIALIZATION,
 # BY ISRAEL MAFABI EMMANUEL
 
+# __init__.py
+
 from flask import Flask, render_template
 from flask_cors import CORS
 from extensions import db, jwt, migrate

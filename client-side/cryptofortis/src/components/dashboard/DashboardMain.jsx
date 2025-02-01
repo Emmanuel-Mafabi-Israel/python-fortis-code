@@ -6,10 +6,10 @@
     --- DASHBOARD ---
 */
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 
-// import LoadingSpinner from '../common/FortisLoadingSpinner';
-// import LoadingScreen from '../common/FortisLoadingScreen';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import DashboardLayout from '../layouts/DashboardLayout'
@@ -17,33 +17,34 @@ import DashboardLayout from '../layouts/DashboardLayout'
 import { AuthContext } from '../../context/AuthContext'; // Import AuthContext
 import api from '../api/api'; // Import the API functions
 
-import { Link } from 'react-router-dom';
 
 export default function DashboardMain() {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const { token } = useContext(AuthContext); // Destructure token from context
 
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            setLoading(true);
-            setError('');
-            try {
-                const data = await api.getUserDetails(token);
-                setUser(data);
-            } catch (err) {
-                setError(err.message);
-            }
-            setLoading(false);
-        };
+    // derive loading state from user
+    const loading = !user;
 
-        fetchUserDetails();
+    const fetchUserDetails = useCallback(async () => {
+        setError('');
+        try {
+            const data = await api.getUserDetails(token);
+            setUser(data);
+        } catch (err) {
+            setError(err.message);
+            setUser(null); // set user to null to trigger error state
+        }
     }, [token]);
 
 
+    useEffect(() => {
+        fetchUserDetails();
+    }, [fetchUserDetails]);
+
+
     if (loading) {
-        console.log("Loading data...")
+        return <LoadingScreen />;
     }
 
     if (error) {
@@ -58,11 +59,11 @@ export default function DashboardMain() {
                         <div className='fortis-code-welcome-text'>
                         {user.profile?.name ? "Welcome, " + user.profile.name + "!" : 
                             <div className='fortis-code-setup-heads-up'>
-                                <p>Go to the&nbsp;
+                                <p>Go to the 
                                     <Link className='fortis-code-link-redirect' to="/account">
                                         Account Section
                                     </Link>
-                                    &nbsp;and set-up your account credentials. <br />
+                                     and set-up your account credentials. <br />
                                     You've been awarded funds - participation funds. 
                                     </p>
                             </div>}

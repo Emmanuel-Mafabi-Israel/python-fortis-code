@@ -61,13 +61,14 @@ def update_balance(sender_email, recipient_email, value):
         raise e
 
 def record_transaction(sender_email, recipient_email, value, description=None):
-    sender_id    = User.query.filter_by(email=sender_email).first().id if sender_email else None
-    recipient_id = User.query.filter_by(email=recipient_email).first().id
+    sender = User.query.filter_by(email=sender_email).first() if sender_email else None
+    recipient = User.query.filter_by(email=recipient_email).first()
+    sender_id = sender.id if sender else None
+    recipient_id = recipient.id if recipient else None
     transaction_type = "Direct Deposit" if "deposit" in description.lower() else "Token Share" # Derive from the description.
-
+    
     try:
         int_value = int(value)  # Ensure the value is an integer
-        
         transaction = Transaction(
             sender_id=sender_id,
             recipient_id=recipient_id,
@@ -75,22 +76,30 @@ def record_transaction(sender_email, recipient_email, value, description=None):
             transaction_type=transaction_type,
             description=description
         )
-
         db.session.add(transaction)
         db.session.commit()
-        
+    
     except Exception as e:
         db.session.rollback()
         print(f"Error recording transaction: {e}")
-        raise e
+        raise e 
     
 # Transaction handler!!!
 def handle_transaction(sender_email, recipient_email, value, method, expiry):
     description = 'Initial deposit' if sender_email is None else 'Deposit' if method == 'deposit' else 'Token transfer'
     try:
-        update_balance(sender_email, recipient_email, value)
-        record_transaction(sender_email, recipient_email, value, description)
-        notify_user(recipient_email, sender_email, value, expiry, method)
+        if sender_email is None:
+            recipient = User.query.filter_by(email=recipient_email).first()
+            if recipient:
+                update_balance(sender_email, recipient_email, value)
+                record_transaction(None, recipient_email, value, description) # set sender_email to NULL in the transaction
+                notify_user(recipient_email, None, value, expiry, method) # set sender to null when notifying the user
+            else:
+                raise Exception(f'Error recipient not found {recipient_email}')
+        else:
+            update_balance(sender_email, recipient_email, value)
+            record_transaction(sender_email, recipient_email, value, description)
+            notify_user(recipient_email, sender_email, value, expiry, method)
     except Exception as e:
         print(f"Error in handle_transaction: {e}")
         raise e

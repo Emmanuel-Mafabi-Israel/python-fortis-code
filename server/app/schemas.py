@@ -1,9 +1,3 @@
-# GLORY BE TO GOD,
-# FORTIS MODEL FILE,
-# BY ISRAEL MAFABI EMMANUEL
-
-# MODELS - SCHEMA, SERIALIZATION
-
 from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models import User, Transaction, Notification, AuditLog, UserProfile, Role, Activity
@@ -23,10 +17,11 @@ class TransactionSchema(SQLAlchemyAutoSchema):
         load_instance = True
 
     def get_sender_email(self, obj):
-        return obj.sender.email if obj.sender else "System"
+        return obj.sender.email if obj.sender else "CryptoFortis - System"
 
     def get_recipient_email(self, obj):
-        return obj.recipient.email
+       return obj.recipient.email if obj.recipient else "CryptoFortis - System"
+    
 
 class NotificationSchema(SQLAlchemyAutoSchema):
     class Meta:

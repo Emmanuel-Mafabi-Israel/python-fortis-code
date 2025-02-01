@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 
-// import LoadingScreen from '../common/FortisLoadingScreen';
+import LoadingScreen from '../common/FortisLoadingScreen';
 import ErrorMessage from '../common/FortisErrorMessage';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -39,6 +39,7 @@ export default function TransactionHistory() {
 
     if (loading) {
         console.log("Loading data...")
+        return <LoadingScreen />
     }
 
     if (error) {
