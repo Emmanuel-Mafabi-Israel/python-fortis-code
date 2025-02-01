@@ -205,6 +205,6 @@ def debug_models():
 @auth_bp.route('/debug/users/', methods=['GET'])
 def debug_users():
     # retrieving all the emails:
-    users  = User.query.filter(User.deleted_at == None).all() # filter out deleted users
+    users  = User.query.all()
     emails = [(index + 1, user.email) for index, user in enumerate(users)] 
     return render_template('emails.html', emails=emails)
