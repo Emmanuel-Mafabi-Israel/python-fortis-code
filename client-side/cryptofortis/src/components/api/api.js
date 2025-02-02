@@ -37,7 +37,7 @@ const apiCall = async (url, method = 'GET', body = null, headers = {}) => {
             }
             console.error(`API Error: ${errorMessage}`);
             if (SERVER_RESPONSE.status === 401) {
-                throw new Error('Unauthorized access, please log in');
+                throw new Error(errorMessage);
             }
             throw new Error(errorMessage);
         }
