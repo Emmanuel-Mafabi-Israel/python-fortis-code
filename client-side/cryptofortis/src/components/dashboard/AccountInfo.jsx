@@ -20,9 +20,11 @@ import DashboardLayout from '../layouts/DashboardLayout';
 export default function AccountInfo() {
     const [user, setUser] = useState(null);
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const { token, logout, setUser: setUserContext, isLoading } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [initialUser, setInitialUser] = useState(null); // Store initial user data
 
 
     const fetchUserDetails = useCallback(async () => {
@@ -30,10 +32,20 @@ export default function AccountInfo() {
         try {
             const data = await api.getUserDetails(token);
             setUser(data);
+
+            setInitialUser(data); // Save the initial user data
+
             if (data && data.profile && data.profile.name) {
                 setName(data.profile.name);
+
             } else {
-                setName(""); // set empty if no name is set
+                setName("Set Up Your Initials");
+            }
+
+            if (data && data.email) {
+                setEmail(data.email)
+            } else {
+                setEmail("")
             }
         } catch (err) {
             setError(err.message);
@@ -55,12 +67,19 @@ export default function AccountInfo() {
         e.preventDefault();
         setError('');
         try {
-            const updatedUser = await api.updateUserProfile(token, { name });
+            // We will update only the name state in the context, so we wont fetch again
+            const updatedUser = { ...user, profile: { ...user.profile, name: name } };
+
             if (updatedUser) {
                 setUser(updatedUser);
                 setUserContext(updatedUser);
             } else {
                 setError("Failed to update profile");
+            }
+
+            //Only do the actual update of the user's name in the db if the user has changed the name
+            if (initialUser?.profile?.name !== name) {
+                await api.updateUserProfile(token, { name });
             }
         } catch (err) {
             setError(err.message);
@@ -80,8 +99,7 @@ export default function AccountInfo() {
 
     // trigger text -> new user's will have to setup their account names...
     const namePlaceholder = user?.profile?.name ? "Change Your Initials" : "Set Up Your Initials";
-    const userLogoText = user?.profile?.name ? user?.profile?.name : "Set Up Your Initials";
-
+    const userLogoText = name;
 
     if (error) {
         return <ErrorMessage className="fortis-code-error-major" message={error} />;
@@ -93,7 +111,7 @@ export default function AccountInfo() {
                 <div className='fortis-code-dashboard-main-accounts'>
                     <div className='fortis-code-user'>
                         <div className='fortis-code-user-logo'>{userLogoText}</div>
-                        <div className='fortis-code-user-subheading'>{user?.email}</div>
+                        <div className='fortis-code-user-subheading'>{email}</div>
                     </div>
                     {user && (
                         <div className='fortis-code-user-account-info'>

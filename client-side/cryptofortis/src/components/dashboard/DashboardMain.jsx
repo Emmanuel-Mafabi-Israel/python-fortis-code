@@ -6,7 +6,7 @@
     --- DASHBOARD ---
 */
 
-import React, { useState, useEffect, useContext, useCallback } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import ErrorMessage from '../common/FortisErrorMessage';
@@ -16,30 +16,11 @@ import LoadingScreen from '../common/FortisLoadingScreen';
 import DashboardLayout from '../layouts/DashboardLayout';
 
 import { AuthContext } from '../../context/AuthContext';
-import api from '../api/api';
 
 export default function DashboardMain() {
-    const [user, setUser] = useState(null);
-    const [error, setError] = useState('');
-    const { token, isLoading } = useContext(AuthContext); // Destructure token and isLoading from context
+    const { user, isLoading, error } = useContext(AuthContext); // Destructure user, loading and error from the AuthContext.
 
 
-    const fetchUserDetails = useCallback(async () => {
-        setError('');
-        try {
-            const data = await api.getUserDetails(token);
-            setUser(data);
-        } catch (err) {
-            setError(err.message);
-            setUser(null);
-        }
-    }, [token]);
-
-    useEffect(() => {
-        if (token) {
-            fetchUserDetails();
-        }
-    }, [fetchUserDetails, token]);
 
     if (error) {
         return <ErrorMessage className="fortis-code-error-major" message={error} />;
@@ -54,11 +35,11 @@ export default function DashboardMain() {
                             <div className='fortis-code-welcome-text'>
                                 {user.profile?.name ? (user.profile?.name === "FortisCode" ? "Welcome Admin!" : "Welcome, " + user.profile.name + "!") :
                                     <div className='fortis-code-setup-heads-up'>
-                                        <p>Go to the&nbsp;
+                                        <p>Go to the
                                             <Link className='fortis-code-link-redirect' to="/account">
                                                 Account Section
                                             </Link>
-                                            &nbsp;and set-up your account credentials. <br />
+                                            and set-up your account credentials. <br />
                                             You've been awarded funds - participation funds.
                                         </p>
                                     </div>}

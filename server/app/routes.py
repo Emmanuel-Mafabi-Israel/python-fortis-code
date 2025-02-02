@@ -156,6 +156,7 @@ def get_notifications():
 def get_user_details(user):  # Using the decorator here
     print(f"User balance (from get_user_details): {user.balance}")  # Debug print
     serialized_user = user_schema.dump(user)
+    # print(serialized_user)
     return jsonify(serialized_user), 200
 
 @auth_bp.route('/user', methods=['PATCH'])
