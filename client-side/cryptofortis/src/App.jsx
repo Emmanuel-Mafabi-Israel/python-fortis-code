@@ -16,7 +16,7 @@ import Notifications from './components/dashboard/Notifications';
 import TransactionHistory from './components/dashboard/TransactionHistory';
 import TransactionAction from './components/dashboard/TransactionAction';
 import AccountDeleted from './components/auth/AccountDeleted';
-
+import RedirectIfAuthenticatedRoute from './components/auth/RedirectIfAuthenticatedRoute';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 
 // ProtectedRoute
@@ -31,9 +31,9 @@ export default function App() {
 		<Router>
 			<AuthProvider>
 				<Routes>
-					<Route path="/" element={<Welcome />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Registration />} />
+					<Route path="/" element={<RedirectIfAuthenticatedRoute> <Welcome /> </RedirectIfAuthenticatedRoute>} />
+					<Route path="/login" element={<RedirectIfAuthenticatedRoute> <Login /> </RedirectIfAuthenticatedRoute>} />
+					<Route path="/register" element={<RedirectIfAuthenticatedRoute>  <Registration /> </RedirectIfAuthenticatedRoute>} />
 					<Route path="/account-deleted" element={<AccountDeleted />} />
 					<Route path="/dashboard" element={
 						<ProtectedRoute>
