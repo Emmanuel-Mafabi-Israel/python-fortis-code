@@ -54,11 +54,11 @@ export default function DashboardMain() {
                             <div className='fortis-code-welcome-text'>
                                 {user.profile?.name ? (user.profile?.name === "FortisCode" ? "Welcome Admin!" : "Welcome, " + user.profile.name + "!") :
                                     <div className='fortis-code-setup-heads-up'>
-                                        <p>Go to the
+                                        <p>Go to the&nbsp;
                                             <Link className='fortis-code-link-redirect' to="/account">
                                                 Account Section
                                             </Link>
-                                            and set-up your account credentials. <br />
+                                            &nbsp;and set-up your account credentials. <br />
                                             You've been awarded funds - participation funds.
                                         </p>
                                     </div>}
